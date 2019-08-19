@@ -3,7 +3,11 @@ import { View } from "react-native";
 
 class ScoringScreen extends Component {
   render() {
-    return <View />;
+    return (
+      <View>
+        <Text>Scoring Screen</Text>
+      </View>
+    );
   }
 }
 
