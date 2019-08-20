@@ -1,24 +1,41 @@
 import React, { Component } from "react";
 import { TouchableHighlight, View, Text } from "react-native";
 import NewMatchModal from "./NewMatchModal";
+import { styles } from "../../styles/styles";
 
 class HomeScreen extends Component {
+  static navigationOptions = {
+    title: "Real Tennis Scoreboard"
+  };
+
   state = {
     modalVisible: false
   };
 
   showModal = () => this.setState({ modalVisible: true });
 
+  closeModal = () => this.setState({ modalVisible: false });
+
+  goToTournaments = () => this.props.navigation.navigate("Tournaments");
+
   render() {
     return (
-      <View>
-        <NewMatchModal visible={this.state.modalVisible} />
-        <TouchableHighlight
-          style={{ width: 100, height: 50 }}
-          onPress={this.showModal}
-        >
-          <Text>New Match</Text>
-        </TouchableHighlight>
+      <View style={styles.container}>
+        <NewMatchModal
+          visible={this.state.modalVisible}
+          closeModal={this.closeModal}
+        />
+        <View style={styles.midRow}>
+          <TouchableHighlight
+            style={styles.homeBtn}
+            onPress={this.goToTournaments}
+          >
+            <Text style={styles.btnText}>Saved Matches</Text>
+          </TouchableHighlight>
+          <TouchableHighlight style={styles.homeBtn} onPress={this.showModal}>
+            <Text style={styles.btnText}>New Match</Text>
+          </TouchableHighlight>
+        </View>
       </View>
     );
   }
