@@ -5,7 +5,7 @@ import { styles } from "../../styles/styles";
 
 class HomeScreen extends Component {
   static navigationOptions = {
-    title: "Real Tennis Scoreboard"
+    title: "Tennis Scoreboard"
   };
 
   state = {

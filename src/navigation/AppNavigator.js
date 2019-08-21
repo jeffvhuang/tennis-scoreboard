@@ -32,10 +32,30 @@ const ExploreStack = createStackNavigator(
 
 // const ErrorStack = createStackNavigator({ ErrorView: ErrorScreen });
 
-const MainTabs = createBottomTabNavigator({
-  Explore: ExploreStack,
-  Scoring: ScoringScreen
-});
+const MainTabs = createBottomTabNavigator(
+  {
+    Explore: ExploreStack,
+    Scoring: ScoringScreen
+  },
+  {
+    tabBarOptions: {
+      activeTintColor: "white",
+      activeBackgroundColor: "royalblue",
+      style: {
+        backgroundColor: "white",
+        height: 50
+      },
+      tabStyle: {
+        justifyContent: "center"
+      },
+      labelStyle: {
+        fontSize: 24,
+        height: "100%",
+        textAlignVertical: "center"
+      }
+    }
+  }
+);
 
 const AppNavigator = createSwitchNavigator(
   {

@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Real Tennis Scoreboard",
-    "slug": "real-tennis-scoreboard",
+    "name": "Tennis Scoreboard",
+    "slug": "tennis-scoreboard",
     "privacy": "public",
     "sdkVersion": "34.0.0",
     "platforms": ["ios", "android", "web"],
