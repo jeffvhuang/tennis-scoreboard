@@ -23,12 +23,13 @@ export const styles = StyleSheet.create({
     backgroundColor: "royalblue",
     borderRadius: 10,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    padding: 20
   },
   btnText: {
     width: "100%",
     color: colours.white,
-    fontSize: 40,
+    fontSize: 32,
     textAlign: "center"
   },
   modal: {
@@ -36,20 +37,47 @@ export const styles = StyleSheet.create({
     height: "100%",
     backgroundColor: colours.transparentBlack,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    fontSize: 20
   },
-  modalInputsContainer: {
+  modalMain: {
     backgroundColor: colours.white,
     width: "80%",
     height: "80%",
-    padding: 10
+    padding: 10,
+    justifyContent: "space-between"
+  },
+  label: {
+    fontSize: 20,
+    fontWeight: "bold"
   },
   searchInput: {
-    width: "80%",
+    width: "100%",
     borderBottomWidth: 1,
     borderBottomColor: "grey",
     fontSize: 20,
     paddingLeft: 10,
-    paddingRight: 10
+    paddingRight: 10,
+    marginBottom: 20
+  },
+  modalButtonsSection: {
+    backgroundColor: colours.white,
+    width: "100%",
+    padding: 10,
+    justifyContent: "space-evenly",
+    flexDirection: "row"
+  },
+  modalBtn: {
+    padding: 10,
+    borderRadius: 10
+  },
+  modalBtnCancel: {
+    backgroundColor: "grey"
+  },
+  modalBtnSubmit: {
+    backgroundColor: "royalblue"
+  },
+  whiteTxt: {
+    color: "white"
   }
 });

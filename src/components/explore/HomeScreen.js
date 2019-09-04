@@ -18,12 +18,18 @@ class HomeScreen extends Component {
 
   goToTournaments = () => this.props.navigation.navigate("Tournaments");
 
+  goToScoring = (player1, player2) => {
+    this.closeModal();
+    this.props.navigation.navigate("Scoring", { player1, player2 });
+  };
+
   render() {
     return (
       <View style={styles.container}>
         <NewMatchModal
           visible={this.state.modalVisible}
           closeModal={this.closeModal}
+          goToScoring={this.goToScoring}
         />
         <View style={styles.midRow}>
           <TouchableHighlight
