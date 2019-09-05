@@ -1,11 +1,17 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 
 const colours = {
   white: "#fff",
-  transparentBlack: "rgba(0, 0, 0, 0.5)"
+  transparentBlack: "rgba(0, 0, 0, 0.5)",
+  main: "royalblue"
 };
 
 export const styles = StyleSheet.create({
+  androidSafeArea: {
+    flex: 1,
+    backgroundColor: "navy",
+    paddingTop: Platform.OS === "android" ? 25 : 0
+  },
   container: {
     flex: 1,
     backgroundColor: "#fff",
@@ -20,7 +26,7 @@ export const styles = StyleSheet.create({
   homeBtn: {
     width: "25%",
     aspectRatio: 2,
-    backgroundColor: "royalblue",
+    backgroundColor: colours.main,
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
@@ -75,9 +81,38 @@ export const styles = StyleSheet.create({
     backgroundColor: "grey"
   },
   modalBtnSubmit: {
-    backgroundColor: "royalblue"
+    backgroundColor: colours.main
   },
   whiteTxt: {
     color: "white"
+  }
+});
+
+export const scoreStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colours.white
+  },
+  totalScore: {
+    width: "100%",
+    flex: 1
+  },
+  controls: {
+    width: "100%",
+    flex: 1
+  },
+  playerRow: {
+    flex: 1,
+    width: "100%",
+    flexDirection: "row"
+  },
+  player: {
+    flex: 3
+  },
+  game: {
+    flex: 1
+  },
+  set: {
+    flex: 1
   }
 });
