@@ -1,4 +1,5 @@
 import { StyleSheet, Platform } from "react-native";
+import { scale, moderateScale, verticalScale } from "../helpers/scaling";
 
 const colours = {
   white: "#fff",
@@ -104,15 +105,26 @@ export const scoreStyles = StyleSheet.create({
   playerRow: {
     flex: 1,
     width: "100%",
-    flexDirection: "row"
+    flexDirection: "row",
+    borderBottomWidth: 1
   },
   player: {
-    flex: 3
+    flex: 3,
+    borderRightWidth: 1
   },
   game: {
-    flex: 1
+    flex: 1,
+    borderRightWidth: 1,
+    alignItems: "center",
+    justifyContent: "center"
   },
   set: {
-    flex: 1
+    flex: 1,
+    borderRightWidth: 1,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  score: {
+    fontSize: moderateScale(30)
   }
 });

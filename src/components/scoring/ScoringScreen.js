@@ -19,36 +19,36 @@ class ScoringScreen extends Component {
           <View style={scoreStyles.totalScore}>
             <View style={scoreStyles.playerRow}>
               <View style={scoreStyles.player}>
-                <Text>{this.state.player1}</Text>
+                <Text style={scoreStyles.score}>{this.state.player1}</Text>
               </View>
               <View style={scoreStyles.game}>
-                <Text>40</Text>
+                <Text style={scoreStyles.score}>40</Text>
               </View>
               <View style={scoreStyles.set}>
-                <Text>6</Text>
+                <Text style={scoreStyles.score}>6</Text>
               </View>
               <View style={scoreStyles.set}>
-                <Text>6</Text>
+                <Text style={scoreStyles.score}>6</Text>
               </View>
               <View style={scoreStyles.set}>
-                <Text>1</Text>
+                <Text style={scoreStyles.score}>1</Text>
               </View>
             </View>
             <View style={scoreStyles.playerRow}>
               <View style={scoreStyles.player}>
-                <Text>{this.state.player2}</Text>
+                <Text style={scoreStyles.score}>{this.state.player2}</Text>
               </View>
               <View style={scoreStyles.game}>
-                <Text>40</Text>
+                <Text style={scoreStyles.score}>40</Text>
               </View>
               <View style={scoreStyles.set}>
-                <Text>6</Text>
+                <Text style={scoreStyles.score}>6</Text>
               </View>
               <View style={scoreStyles.set}>
-                <Text>6</Text>
+                <Text style={scoreStyles.score}>6</Text>
               </View>
               <View style={scoreStyles.set}>
-                <Text>1</Text>
+                <Text style={scoreStyles.score}>1</Text>
               </View>
             </View>
           </View>

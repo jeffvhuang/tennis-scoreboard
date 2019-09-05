@@ -34,8 +34,8 @@ const ExploreStack = createStackNavigator(
 
 const MainTabs = createBottomTabNavigator(
   {
-    Explore: ExploreStack,
-    Scoring: ScoringScreen
+    Scoring: ScoringScreen,
+    Explore: ExploreStack
   },
   {
     tabBarOptions: {
