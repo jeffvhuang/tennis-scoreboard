@@ -17,6 +17,21 @@ class ScoringScreen extends Component {
       <SafeAreaView style={styles.androidSafeArea}>
         <View style={scoreStyles.container}>
           <View style={scoreStyles.totalScore}>
+            <View style={scoreStyles.scoresTableHeader}>
+              <View style={scoreStyles.player} />
+              <View style={scoreStyles.game}>
+                <Text style={scoreStyles.scoreHeader}>Game</Text>
+              </View>
+              <View style={scoreStyles.set}>
+                <Text style={scoreStyles.scoreHeader}>Set 1</Text>
+              </View>
+              <View style={scoreStyles.set}>
+                <Text style={scoreStyles.scoreHeader}>Set 2</Text>
+              </View>
+              <View style={scoreStyles.set}>
+                <Text style={scoreStyles.scoreHeader}>Set 3</Text>
+              </View>
+            </View>
             <View style={scoreStyles.playerRow}>
               <View style={scoreStyles.player}>
                 <Text style={scoreStyles.score}>{this.state.player1}</Text>

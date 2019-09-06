@@ -96,11 +96,20 @@ export const scoreStyles = StyleSheet.create({
   },
   totalScore: {
     width: "100%",
-    flex: 1
+    flex: 3
   },
   controls: {
     width: "100%",
-    flex: 1
+    flex: 4
+  },
+  scoresTableHeader: {
+    height: "20%",
+    width: "100%",
+    flexDirection: "row",
+    borderBottomWidth: 1
+  },
+  scoreHeader: {
+    fontSize: moderateScale(14)
   },
   playerRow: {
     flex: 1,
@@ -110,7 +119,8 @@ export const scoreStyles = StyleSheet.create({
   },
   player: {
     flex: 3,
-    borderRightWidth: 1
+    borderRightWidth: 1,
+    paddingLeft: moderateScale(10)
   },
   game: {
     flex: 1,
@@ -125,6 +135,6 @@ export const scoreStyles = StyleSheet.create({
     justifyContent: "center"
   },
   score: {
-    fontSize: moderateScale(30)
+    fontSize: moderateScale(26)
   }
 });
