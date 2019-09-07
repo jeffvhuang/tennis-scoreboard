@@ -16,8 +16,8 @@ class ScoringScreen extends Component {
       currentSet: 1,
       gameScore1: 40,
       gameScore2: 15,
-      scores1: [6, 6, 1],
-      scores2: [3, 7, 1],
+      scores1: ["6", "6", "1"],
+      scores2: ["3", "7", "1"],
       isEditing: false
     };
   }
@@ -25,10 +25,28 @@ class ScoringScreen extends Component {
   onNameChange1 = player1 => this.setState({ player1 });
   onNameChange2 = player2 => this.setState({ player2 });
 
+  // Provide appropriate setState depending on player and set for the player
+  // via multiple nested functions
+  onScoreChange = scoresPropName => {
+    return setIndex => {
+      return value => {
+        this.setState(prevState => {
+          const newScores = prevState[scoresPropName];
+          newScores[setIndex] = value;
+
+          return {
+            [scoresPropName]: newScores
+          };
+        });
+      };
+    };
+  };
+
   toggleEdit = () =>
     this.setState(prevState => ({ isEditing: !prevState.isEditing }));
 
   render() {
+    console.log("state", this.state);
     return (
       <SafeAreaView style={styles.androidSafeArea}>
         <View style={scoreStyles.container}>
@@ -44,12 +62,14 @@ class ScoringScreen extends Component {
                   gameScore={this.state.gameScore1}
                   setScores={this.state.scores1}
                   onNameChange={this.onNameChange1}
+                  onScoreChange={this.onScoreChange("scores1")}
                 />
                 <PlayerScoreEditRow
                   player={this.state.player2}
                   gameScore={this.state.gameScore2}
                   setScores={this.state.scores2}
                   onNameChange={this.onNameChange2}
+                  onScoreChange={this.onScoreChange("scores2")}
                 />
               </>
             ) : (
