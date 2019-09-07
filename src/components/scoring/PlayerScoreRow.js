@@ -5,7 +5,7 @@ import { scoreStyles } from "../../styles/styles";
 
 const propTypes = {
   player: PropTypes.string.isRequired,
-  gameScore: PropTypes.number.isRequired,
+  gameScore: PropTypes.string.isRequired,
   setScores: PropTypes.array.isRequired
 };
 

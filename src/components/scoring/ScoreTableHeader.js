@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text } from "react-native";
 import PropTypes from "prop-types";
-import EditButton from "./EditButton";
+import Button from "../common/Button";
 import { scoreStyles } from "../../styles/styles";
 
 const propTypes = {
@@ -14,7 +14,7 @@ const ScoreTableHeader = ({ toggleEdit, isEditing }) => {
   return (
     <View style={scoreStyles.scoresTableHeader}>
       <View style={[scoreStyles.player, scoreStyles.editContainer]}>
-        <EditButton
+        <Button
           onPress={toggleEdit}
           title={btnText}
           style={scoreStyles.editButton}

@@ -1,11 +1,13 @@
 import React from "react";
-import { View, Text, TextInput } from "react-native";
+import { View, TextInput } from "react-native";
 import PropTypes from "prop-types";
+import Dropdown from "../common/Dropdown";
 import { scoreStyles } from "../../styles/styles";
+import { tennisGameScores } from "../../helpers/constants";
 
 const propTypes = {
   player: PropTypes.string.isRequired,
-  gameScore: PropTypes.number.isRequired,
+  gameScore: PropTypes.string.isRequired,
   setScores: PropTypes.array.isRequired,
   onNameChange: PropTypes.func.isRequired,
   onScoreChange: PropTypes.func.isRequired
@@ -16,6 +18,7 @@ const PlayerScoreEditRow = ({
   gameScore,
   setScores,
   onNameChange,
+  onGameChange,
   onScoreChange
 }) => {
   return (
@@ -33,7 +36,12 @@ const PlayerScoreEditRow = ({
           value={gameScore}
           style={[scoreStyles.score, scoreStyles.input]}
         /> */}
-        <Text style={scoreStyles.score}>{gameScore}</Text>
+        <Dropdown
+          selectedValue={gameScore}
+          onValueChange={onGameChange}
+          items={tennisGameScores}
+        />
+        {/* <Text style={scoreStyles.score}>{gameScore}</Text> */}
       </View>
       <View style={scoreStyles.set}>
         <TextInput

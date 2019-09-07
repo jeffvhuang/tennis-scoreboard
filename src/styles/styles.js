@@ -96,6 +96,10 @@ export const styles = StyleSheet.create({
     textAlign: "center",
     justifyContent: "center",
     fontSize: moderateScale(14)
+  },
+  dropdown: {
+    width: 100,
+    height: 50
   }
 });
 
