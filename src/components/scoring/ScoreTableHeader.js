@@ -14,12 +14,14 @@ const ScoreTableHeader = ({ toggleEdit, isEditing }) => {
   return (
     <View style={scoreStyles.scoresTableHeader}>
       <View style={[scoreStyles.player, scoreStyles.editContainer]}>
-        <Button
-          onPress={toggleEdit}
-          title={btnText}
-          style={scoreStyles.editButton}
-          textStyle={scoreStyles.buttonText}
-        />
+        <View style={scoreStyles.btnContainer}>
+          <Button
+            onPress={toggleEdit}
+            title={btnText}
+            style={scoreStyles.editButton}
+            textStyle={scoreStyles.buttonText}
+          />
+        </View>
       </View>
       <View style={scoreStyles.game}>
         <Text style={scoreStyles.scoreHeader}>Game</Text>

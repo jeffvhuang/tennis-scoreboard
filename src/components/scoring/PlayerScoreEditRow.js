@@ -1,7 +1,7 @@
 import React from "react";
 import { View, TextInput } from "react-native";
 import PropTypes from "prop-types";
-import Dropdown from "../common/Dropdown";
+import ModalSelector from "react-native-modal-selector";
 import { scoreStyles } from "../../styles/styles";
 import { tennisGameScores } from "../../helpers/constants";
 
@@ -27,21 +27,22 @@ const PlayerScoreEditRow = ({
         <TextInput
           onChangeText={onNameChange}
           value={player}
-          style={[scoreStyles.score, scoreStyles.input]}
+          style={[scoreStyles.playerName, scoreStyles.input]}
         />
       </View>
       <View style={scoreStyles.game}>
-        {/* <TextInput
-          onChangeText={onGameChange}
-          value={gameScore}
-          style={[scoreStyles.score, scoreStyles.input]}
-        /> */}
-        <Dropdown
-          selectedValue={gameScore}
-          onValueChange={onGameChange}
-          items={tennisGameScores}
-        />
-        {/* <Text style={scoreStyles.score}>{gameScore}</Text> */}
+        <ModalSelector
+          data={tennisGameScores}
+          initValue={gameScore}
+          onChange={onGameChange}
+          style={scoreStyles.modalSelector}
+        >
+          <TextInput
+            editable={false}
+            value={gameScore}
+            style={scoreStyles.modalScore}
+          />
+        </ModalSelector>
       </View>
       <View style={scoreStyles.set}>
         <TextInput

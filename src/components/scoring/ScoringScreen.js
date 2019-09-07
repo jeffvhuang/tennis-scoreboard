@@ -26,8 +26,9 @@ class ScoringScreen extends Component {
   onNameChange2 = player2 => this.setState({ player2 });
 
   onGameChange = scoresPropName => {
-    return value => {
-      this.setState({ [scoresPropName]: value });
+    return option => {
+      console.log(option);
+      this.setState({ [scoresPropName]: option.label });
     };
   };
 
@@ -75,7 +76,7 @@ class ScoringScreen extends Component {
                   gameScore={this.state.gameScore2}
                   setScores={this.state.scores2}
                   onNameChange={this.onNameChange2}
-                  onGameChange={this.onGameChange("gameScore1")}
+                  onGameChange={this.onGameChange("gameScore2")}
                   onScoreChange={this.onScoreChange("scores2")}
                 />
               </>

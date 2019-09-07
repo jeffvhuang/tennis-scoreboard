@@ -13,7 +13,7 @@ const PlayerScoreRow = ({ player, gameScore, setScores }) => {
   return (
     <View style={scoreStyles.playerRow}>
       <View style={scoreStyles.player}>
-        <Text style={scoreStyles.score}>{player}</Text>
+        <Text style={scoreStyles.playerName}>{player}</Text>
       </View>
       <View style={scoreStyles.game}>
         <Text style={scoreStyles.score}>{gameScore}</Text>

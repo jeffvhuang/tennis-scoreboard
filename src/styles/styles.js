@@ -4,7 +4,8 @@ import { scale, moderateScale, verticalScale } from "../helpers/scaling";
 const colours = {
   white: "#fff",
   transparentBlack: "rgba(0, 0, 0, 0.5)",
-  main: "royalblue"
+  main: "royalblue",
+  grey: "gainsboro"
 };
 
 export const styles = StyleSheet.create({
@@ -100,6 +101,9 @@ export const styles = StyleSheet.create({
   dropdown: {
     width: 100,
     height: 50
+  },
+  dropdownItem: {
+    fontSize: moderateScale(14)
   }
 });
 
@@ -123,8 +127,10 @@ export const scoreStyles = StyleSheet.create({
     borderBottomWidth: 1
   },
   editContainer: {
-    textAlign: "left",
-    justifyContent: "center"
+    textAlign: "left"
+  },
+  btnContainer: {
+    width: "95%"
   },
   editButton: {
     height: "100%",
@@ -149,8 +155,8 @@ export const scoreStyles = StyleSheet.create({
   player: {
     flex: 3,
     borderRightWidth: 1,
-    paddingLeft: moderateScale(10),
-    justifyContent: "center"
+    justifyContent: "center",
+    alignItems: "center"
   },
   game: {
     flex: 1,
@@ -164,10 +170,34 @@ export const scoreStyles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
+  modalSelector: {
+    width: "95%",
+    backgroundColor: colours.grey
+  },
+  modalScore: {
+    fontSize: moderateScale(26),
+    textAlign: "center"
+  },
   score: {
-    fontSize: moderateScale(26)
+    fontSize: moderateScale(26),
+    width: "95%",
+    textAlign: "center"
+  },
+  playerName: {
+    fontSize: moderateScale(26),
+    width: "95%",
+    textAlign: "left"
   },
   input: {
-    backgroundColor: "gainsboro"
+    backgroundColor: colours.grey
+  },
+  gameDropdown: {
+    width: "90%",
+    height: "90%",
+    backgroundColor: colours.grey,
+    fontSize: moderateScale(26)
+  },
+  gameDropdownItem: {
+    fontSize: moderateScale(26)
   }
 });
