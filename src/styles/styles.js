@@ -145,7 +145,8 @@ export const scoreStyles = StyleSheet.create({
   player: {
     flex: 3,
     borderRightWidth: 1,
-    paddingLeft: moderateScale(10)
+    paddingLeft: moderateScale(10),
+    justifyContent: "center"
   },
   game: {
     flex: 1,
@@ -161,5 +162,8 @@ export const scoreStyles = StyleSheet.create({
   },
   score: {
     fontSize: moderateScale(26)
+  },
+  input: {
+    backgroundColor: "gainsboro"
   }
 });

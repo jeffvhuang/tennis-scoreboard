@@ -17,7 +17,7 @@ const PlayerScoreEditRow = ({ player, gameScore, setScores, onNameChange }) => {
         <TextInput
           onChangeText={onNameChange}
           value={player}
-          style={scoreStyles.score}
+          style={[scoreStyles.score, scoreStyles.input]}
         />
       </View>
       <View style={scoreStyles.game}>
