@@ -108,6 +108,21 @@ export const scoreStyles = StyleSheet.create({
     flexDirection: "row",
     borderBottomWidth: 1
   },
+  editContainer: {
+    textAlign: "left",
+    justifyContent: "center"
+  },
+  editButton: {
+    height: "100%",
+    justifyContent: "center",
+    alignSelf: "flex-start"
+  },
+  buttonText: {
+    textAlign: "left",
+    justifyContent: "center",
+    color: "blue",
+    fontSize: moderateScale(14)
+  },
   scoreHeader: {
     fontSize: moderateScale(14)
   },

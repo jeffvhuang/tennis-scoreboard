@@ -1,11 +1,22 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, TouchableHighlight } from "react-native";
+import PropTypes from "prop-types";
 import { scoreStyles } from "../../styles/styles";
 
-const ScoreTableHeader = () => {
+const propTypes = {
+  toggleEdit: PropTypes.func.isRequired,
+  isEditing: PropTypes.bool.isRequired
+};
+
+const ScoreTableHeader = ({ toggleEdit, isEditing }) => {
+  const btnText = isEditing ? "Save" : "Edit";
   return (
     <View style={scoreStyles.scoresTableHeader}>
-      <View style={scoreStyles.player} />
+      <View style={[scoreStyles.player, scoreStyles.editContainer]}>
+        <TouchableHighlight style={scoreStyles.editButton} onPress={toggleEdit}>
+          <Text style={scoreStyles.buttonText}>{btnText}</Text>
+        </TouchableHighlight>
+      </View>
       <View style={scoreStyles.game}>
         <Text style={scoreStyles.scoreHeader}>Game</Text>
       </View>
@@ -22,4 +33,5 @@ const ScoreTableHeader = () => {
   );
 };
 
+ScoreTableHeader.propTypes = propTypes;
 export default ScoreTableHeader;
