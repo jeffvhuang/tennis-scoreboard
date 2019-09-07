@@ -86,6 +86,16 @@ export const styles = StyleSheet.create({
   },
   whiteTxt: {
     color: "white"
+  },
+  button: {
+    borderWidth: 1,
+    backgroundColor: "gainsboro",
+    padding: 5
+  },
+  buttonText: {
+    textAlign: "center",
+    justifyContent: "center",
+    fontSize: moderateScale(14)
   }
 });
 
