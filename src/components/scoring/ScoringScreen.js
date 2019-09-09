@@ -27,7 +27,6 @@ class ScoringScreen extends Component {
 
   onGameChange = scoresPropName => {
     return option => {
-      console.log(option);
       this.setState({ [scoresPropName]: option.label });
     };
   };
