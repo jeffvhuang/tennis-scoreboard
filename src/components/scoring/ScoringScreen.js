@@ -1,18 +1,18 @@
 import React, { Component } from "react";
 import { SafeAreaView, View } from "react-native";
+import { connect } from "react-redux";
 
 import { styles, scoreStyles } from "../../styles/styles";
 import ScoreTableHeader from "./ScoreTableHeader";
 import PlayerScoreRow from "./PlayerScoreRow";
 import PlayerScoreEditRow from "./PlayerScoreEditRow";
+import { updatePlayerName } from "../../redux/actions";
 
 class ScoringScreen extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      player1: props.navigation.getParam("player1", "Player 1"),
-      player2: props.navigation.getParam("player2", "Player 2"),
       currentSet: 1,
       gameScore1: "40",
       gameScore2: "15",
@@ -22,8 +22,8 @@ class ScoringScreen extends Component {
     };
   }
 
-  onNameChange1 = player1 => this.setState({ player1 });
-  onNameChange2 = player2 => this.setState({ player2 });
+  onNameChange1 = player1 => this.props.updatePlayerName(1, player1);
+  onNameChange2 = player2 => this.props.updatePlayerName(2, player2);
 
   onGameChange = scoresPropName => {
     return option => {
@@ -63,7 +63,7 @@ class ScoringScreen extends Component {
             {this.state.isEditing ? (
               <>
                 <PlayerScoreEditRow
-                  player={this.state.player1}
+                  player={this.props.match.player1}
                   gameScore={this.state.gameScore1}
                   setScores={this.state.scores1}
                   onNameChange={this.onNameChange1}
@@ -71,7 +71,7 @@ class ScoringScreen extends Component {
                   onScoreChange={this.onScoreChange("scores1")}
                 />
                 <PlayerScoreEditRow
-                  player={this.state.player2}
+                  player={this.props.match.player2}
                   gameScore={this.state.gameScore2}
                   setScores={this.state.scores2}
                   onNameChange={this.onNameChange2}
@@ -101,4 +101,15 @@ class ScoringScreen extends Component {
   }
 }
 
-export default ScoringScreen;
+const mapStateToProps = state => ({
+  match: state.match
+});
+
+const mapDispatchToProps = dispatch => ({
+  updatePlayerName
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ScoringScreen);

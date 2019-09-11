@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { TouchableHighlight, View, Text } from "react-native";
+import { connect } from "react-redux";
+
 import NewMatchModal from "./NewMatchModal";
 import { styles } from "../../styles/styles";
+import { updatePlayerName } from "../../redux/actions";
 
 class HomeScreen extends Component {
   static navigationOptions = {
@@ -20,7 +23,9 @@ class HomeScreen extends Component {
 
   goToScoring = (player1, player2) => {
     this.closeModal();
-    this.props.navigation.navigate("Scoring", { player1, player2 });
+    this.props.updatePlayerName(1, player1);
+    this.props.updatePlayerName(2, player2);
+    this.props.navigation.navigate("Scoring");
   };
 
   render() {
@@ -47,4 +52,15 @@ class HomeScreen extends Component {
   }
 }
 
-export default HomeScreen;
+const mapStateToProps = state => ({
+  match: state.match
+});
+
+const mapDispatchToProps = dispatch => ({
+  updatePlayerName
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HomeScreen);
