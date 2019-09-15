@@ -10,7 +10,7 @@ const propTypes = {
 };
 
 const PlayerScoreRow = ({ player, gameScore, setScores }) => {
-  return (
+  return player ? (
     <View style={scoreStyles.playerRow}>
       <View style={scoreStyles.player}>
         <Text style={scoreStyles.playerName}>{player}</Text>
@@ -34,7 +34,7 @@ const PlayerScoreRow = ({ player, gameScore, setScores }) => {
         </Text>
       </View>
     </View>
-  );
+  ) : null;
 };
 
 PlayerScoreRow.propTypes = propTypes;
