@@ -47,6 +47,7 @@ class ScoreDisplaySection extends Component {
     this.setState(prevState => ({ isEditing: !prevState.isEditing }));
 
   render() {
+    const { match } = this.props;
     return (
       <View style={scoreStyles.container}>
         <View style={scoreStyles.totalScore}>
@@ -57,17 +58,17 @@ class ScoreDisplaySection extends Component {
           {this.state.isEditing ? (
             <>
               <PlayerScoreEditRow
-                player={this.props.match.player1}
-                gameScore={this.props.match.gameScore1}
-                setScores={this.props.match.scores1}
+                player={match.player1}
+                gameScore={match.gameScore1}
+                setScores={match.scores1}
                 onNameChange={this.onNameChange1}
                 onGameChange={this.onGameChange(1)}
                 onScoreChange={this.onScoreChange(1)}
               />
               <PlayerScoreEditRow
-                player={this.props.match.player2}
-                gameScore={this.props.match.gameScore2}
-                setScores={this.props.match.scores2}
+                player={match.player2}
+                gameScore={match.gameScore2}
+                setScores={match.scores2}
                 onNameChange={this.onNameChange2}
                 onGameChange={this.onGameChange(2)}
                 onScoreChange={this.onScoreChange(2)}
@@ -76,19 +77,18 @@ class ScoreDisplaySection extends Component {
           ) : (
             <>
               <PlayerScoreRow
-                player={this.props.match.player1}
-                gameScore={this.props.match.gameScore1}
-                setScores={this.props.match.scores1}
+                player={match.player1}
+                gameScore={match.gameScore1}
+                setScores={match.scores1}
               />
               <PlayerScoreRow
-                player={this.props.match.player2}
-                gameScore={this.props.match.gameScore2}
-                setScores={this.props.match.scores2}
+                player={match.player2}
+                gameScore={match.gameScore2}
+                setScores={match.scores2}
               />
             </>
           )}
         </View>
-        <View style={scoreStyles.controls}></View>
       </View>
     );
   }
