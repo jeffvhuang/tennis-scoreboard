@@ -3,6 +3,8 @@ import {
   UPDATE_PLAYER_2_NAME,
   UPDATE_GAME_SCORE_1,
   UPDATE_GAME_SCORE_2,
+  UPDATE_SET_SCORE_1,
+  UPDATE_SET_SCORE_2,
   RESET_SCORES
 } from "../actions";
 
@@ -28,6 +30,15 @@ const matchReducer = (state = initialState, action) => {
       return merge(state, { gameScore1: action.payload });
     case UPDATE_GAME_SCORE_2:
       return merge(state, { gameScore2: action.payload });
+
+    case UPDATE_SET_SCORE_1:
+      const scores1 = [...state.scores1];
+      scores1[action.setIndex] = action.payload;
+      return merge(state, { scores1 });
+    case UPDATE_SET_SCORE_2:
+      const scores2 = [...state.scores2];
+      scores2[action.setIndex] = action.payload;
+      return merge(state, { scores2 });
 
     case RESET_SCORES:
       return initialState;

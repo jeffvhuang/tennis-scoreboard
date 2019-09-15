@@ -10,6 +10,7 @@ import PlayerScoreEditRow from "./PlayerScoreEditRow";
 import {
   updatePlayerName,
   updateGameScore,
+  updateSetScore,
   resetScores
 } from "../../redux/actions";
 
@@ -36,18 +37,9 @@ class ScoringScreen extends Component {
 
   // Provide appropriate setState depending on player and set for the player
   // via multiple nested functions
-  onScoreChange = scoresPropName => {
+  onScoreChange = playerNumber => {
     return setIndex => {
-      return value => {
-        this.setState(prevState => {
-          const newScores = prevState[scoresPropName];
-          newScores[setIndex] = value;
-
-          return {
-            [scoresPropName]: newScores
-          };
-        });
-      };
+      return value => this.props.updateSetScore(playerNumber, setIndex, value);
     };
   };
 
@@ -71,7 +63,7 @@ class ScoringScreen extends Component {
                   setScores={this.props.match.scores1}
                   onNameChange={this.onNameChange1}
                   onGameChange={this.onGameChange(1)}
-                  onScoreChange={this.onScoreChange("scores1")}
+                  onScoreChange={this.onScoreChange(1)}
                 />
                 <PlayerScoreEditRow
                   player={this.props.match.player2}
@@ -79,7 +71,7 @@ class ScoringScreen extends Component {
                   setScores={this.props.match.scores2}
                   onNameChange={this.onNameChange2}
                   onGameChange={this.onGameChange(2)}
-                  onScoreChange={this.onScoreChange("scores2")}
+                  onScoreChange={this.onScoreChange(2)}
                 />
               </>
             ) : (
@@ -110,7 +102,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
-    { updatePlayerName, updateGameScore, resetScores },
+    { updatePlayerName, updateGameScore, updateSetScore, resetScores },
     dispatch
   );
 };
