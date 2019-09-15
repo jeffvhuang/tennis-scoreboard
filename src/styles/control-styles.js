@@ -17,5 +17,9 @@ export const controlStyles = StyleSheet.create({
   leftBox: {},
   midBox: {},
   rightBox: {},
-  controls: {}
+  controls: {},
+  incrementBtn: {},
+  incrementBtnText: {},
+  decrementBtn: {},
+  controlBtn: {}
 });

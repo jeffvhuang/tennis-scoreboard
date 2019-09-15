@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -15,31 +15,88 @@ class ScoreDisplaySection extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      fault: false
+    };
   }
 
-  onNameChange1 = player1 => this.props.updatePlayerName(1, player1);
-  onNameChange2 = player2 => this.props.updatePlayerName(2, player2);
+  incrementGameScore = playerNumber => {
+    return () => {
+      const { match } = this.props;
+      var score = playerNumber == 1 ? match.gameScore1 : match.gameScore2;
 
-  onGameChange = playerNumber => {
-    return option => this.props.updateGameScore(playerNumber, option.label);
+      // logic to determine  next score or finish current game
+
+      this.props.updateGameScore(playerNumber, score);
+    };
+  };
+
+  decrementGameScore = playerNumber => {
+    return () => {
+      const { match } = this.props;
+      var score = playerNumber == 1 ? match.gameScore1 : match.gameScore2;
+
+      // logic to determine previous score
+
+      this.props.updateGameScore(playerNumber, score);
+    };
+  };
+
+  fault = () => {
+    this.setState(prevState => ({
+      fault: !prevState.fault
+    }));
   };
 
   render() {
+    const { match } = this.props;
     return (
       <View style={controlStyles.container}>
         <View style={controlStyles.nameRow}>
-          <View style={controlStyles.playerName}></View>
+          <View style={controlStyles.playerName}>
+            <Text>{match.player1}</Text>
+          </View>
           <View style={controlStyles.time}></View>
-          <View style={controlStyles.playerName}></View>
+          <View style={controlStyles.playerName}>
+            <Text>{match.player2}</Text>
+          </View>
         </View>
         <View style={controlStyles.gameControlRow}>
-          <View style={controlStyles.gameControls}></View>
+          <View style={controlStyles.gameControls}>
+            <Btn
+              title="-"
+              onPress={this.decrementGameScore(1)}
+              style={controlStyles.decrementBtn}
+            />
+            <Btn
+              title={match.gameScore1}
+              onPress={this.incrementGameScore(1)}
+              style={controlStyles.incrementBtn}
+              textStyle={controlStyles.incrementBtnText}
+            />
+            <Btn
+              title={match.gameScore2}
+              onPress={this.incrementGameScore(2)}
+              style={controlStyles.incrementBtn}
+              textStyle={controlStyles.incrementBtnText}
+            />
+            <Btn
+              title="-"
+              onPress={this.decrementGameScore(2)}
+              style={controlStyles.decrementBtn}
+            />
+          </View>
         </View>
         <View style={controlStyles.buttonsRow}>
           <View style={controlStyles.leftBox}></View>
           <View style={controlStyles.midBox}></View>
-          <View style={controlStyles.rightBox}></View>
+          <View style={controlStyles.rightBox}>
+            <Btn
+              title="Fault"
+              onPress={this.fault}
+              style={controlStyles.controlBtn}
+            />
+          </View>
         </View>
       </View>
     );
