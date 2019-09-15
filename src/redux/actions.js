@@ -3,11 +3,16 @@ export const UPDATE_PLAYER_1_NAME = "UPDATE_PLAYER_1_NAME";
 export const UPDATE_PLAYER_2_NAME = "UPDATE_PLAYER_2_NAME";
 export const UPDATE_GAME_SCORE = "UPDATE_GAME_SCORE";
 export const UPDATE_SET_SCORE = "UPDATE_SET_SCORE";
+export const RESET_SCORES = "RESET_SCORES";
 
 // action creators
 export const updatePlayerName = (playerNumber, name) => ({
   type: playerNumber === 1 ? UPDATE_PLAYER_1_NAME : UPDATE_PLAYER_2_NAME,
   payload: name
+});
+
+export const resetScores = () => ({
+  type: RESET_SCORES
 });
 
 // export const addContact = newContact => ({

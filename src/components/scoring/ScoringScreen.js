@@ -7,7 +7,7 @@ import { styles, scoreStyles } from "../../styles/styles";
 import ScoreTableHeader from "./ScoreTableHeader";
 import PlayerScoreRow from "./PlayerScoreRow";
 import PlayerScoreEditRow from "./PlayerScoreEditRow";
-import { updatePlayerName } from "../../redux/actions";
+import { updatePlayerName, resetScores } from "../../redux/actions";
 
 class ScoringScreen extends Component {
   constructor(props) {
@@ -15,13 +15,13 @@ class ScoringScreen extends Component {
 
     this.state = {
       currentSet: 1,
-      gameScore1: "40",
-      gameScore2: "15",
-      scores1: ["6", "6", "1"],
-      scores2: ["3", "7", "1"],
       isEditing: false
     };
   }
+
+  // componentDidMount() {
+  //   this.props.resetScores();
+  // }
 
   onNameChange1 = player1 => this.props.updatePlayerName(1, player1);
   onNameChange2 = player2 => this.props.updatePlayerName(2, player2);
@@ -53,6 +53,7 @@ class ScoringScreen extends Component {
     this.setState(prevState => ({ isEditing: !prevState.isEditing }));
 
   render() {
+    console.log("MATCH in Scoring screen:", this.props.match);
     return (
       <SafeAreaView style={styles.androidSafeArea}>
         <View style={scoreStyles.container}>
@@ -65,16 +66,16 @@ class ScoringScreen extends Component {
               <>
                 <PlayerScoreEditRow
                   player={this.props.match.player1}
-                  gameScore={this.state.gameScore1}
-                  setScores={this.state.scores1}
+                  gameScore={this.props.match.gameScore1}
+                  setScores={this.props.match.scores1}
                   onNameChange={this.onNameChange1}
                   onGameChange={this.onGameChange("gameScore1")}
                   onScoreChange={this.onScoreChange("scores1")}
                 />
                 <PlayerScoreEditRow
                   player={this.props.match.player2}
-                  gameScore={this.state.gameScore2}
-                  setScores={this.state.scores2}
+                  gameScore={this.props.match.gameScore2}
+                  setScores={this.props.match.scores2}
                   onNameChange={this.onNameChange2}
                   onGameChange={this.onGameChange("gameScore2")}
                   onScoreChange={this.onScoreChange("scores2")}
@@ -84,13 +85,13 @@ class ScoringScreen extends Component {
               <>
                 <PlayerScoreRow
                   player={this.props.match.player1}
-                  gameScore={this.state.gameScore1}
-                  setScores={this.state.scores1}
+                  gameScore={this.props.match.gameScore1}
+                  setScores={this.props.match.scores1}
                 />
                 <PlayerScoreRow
                   player={this.props.match.player2}
-                  gameScore={this.state.gameScore2}
-                  setScores={this.state.scores2}
+                  gameScore={this.props.match.gameScore2}
+                  setScores={this.props.match.scores2}
                 />
               </>
             )}
@@ -107,7 +108,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ updatePlayerName }, dispatch);
+  return bindActionCreators({ updatePlayerName, resetScores }, dispatch);
 };
 
 export default connect(
