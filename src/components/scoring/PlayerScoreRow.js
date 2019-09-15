@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text } from "react-native";
 import PropTypes from "prop-types";
-import { scoreStyles } from "../../styles/styles";
+import { scoreStyles } from "../../styles/score-styles";
 
 const propTypes = {
   player: PropTypes.string.isRequired,

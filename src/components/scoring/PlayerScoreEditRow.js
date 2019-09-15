@@ -2,7 +2,7 @@ import React from "react";
 import { View, TextInput } from "react-native";
 import PropTypes from "prop-types";
 import ModalSelector from "react-native-modal-selector";
-import { scoreStyles } from "../../styles/styles";
+import { scoreStyles } from "../../styles/score-styles";
 import { tennisGameScores } from "../../helpers/constants";
 
 const propTypes = {
