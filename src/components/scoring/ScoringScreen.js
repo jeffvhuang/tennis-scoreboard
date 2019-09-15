@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { SafeAreaView, View } from "react-native";
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
 import { styles, scoreStyles } from "../../styles/styles";
 import ScoreTableHeader from "./ScoreTableHeader";
@@ -82,12 +83,12 @@ class ScoringScreen extends Component {
             ) : (
               <>
                 <PlayerScoreRow
-                  player={this.state.player1}
+                  player={this.props.match.player1}
                   gameScore={this.state.gameScore1}
                   setScores={this.state.scores1}
                 />
                 <PlayerScoreRow
-                  player={this.state.player2}
+                  player={this.props.match.player2}
                   gameScore={this.state.gameScore2}
                   setScores={this.state.scores2}
                 />
@@ -105,9 +106,9 @@ const mapStateToProps = state => ({
   match: state.match
 });
 
-const mapDispatchToProps = dispatch => ({
-  updatePlayerName
-});
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ updatePlayerName }, dispatch);
+};
 
 export default connect(
   mapStateToProps,
