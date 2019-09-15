@@ -1,7 +1,8 @@
 // action types
 export const UPDATE_PLAYER_1_NAME = "UPDATE_PLAYER_1_NAME";
 export const UPDATE_PLAYER_2_NAME = "UPDATE_PLAYER_2_NAME";
-export const UPDATE_GAME_SCORE = "UPDATE_GAME_SCORE";
+export const UPDATE_GAME_SCORE_1 = "UPDATE_GAME_SCORE_1";
+export const UPDATE_GAME_SCORE_2 = "UPDATE_GAME_SCORE_2";
 export const UPDATE_SET_SCORE = "UPDATE_SET_SCORE";
 export const RESET_SCORES = "RESET_SCORES";
 
@@ -9,6 +10,11 @@ export const RESET_SCORES = "RESET_SCORES";
 export const updatePlayerName = (playerNumber, name) => ({
   type: playerNumber === 1 ? UPDATE_PLAYER_1_NAME : UPDATE_PLAYER_2_NAME,
   payload: name
+});
+
+export const updateGameScore = (playerNumber, score) => ({
+  type: playerNumber === 1 ? UPDATE_GAME_SCORE_1 : UPDATE_GAME_SCORE_2,
+  payload: score
 });
 
 export const resetScores = () => ({

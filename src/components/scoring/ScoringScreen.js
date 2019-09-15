@@ -7,7 +7,11 @@ import { styles, scoreStyles } from "../../styles/styles";
 import ScoreTableHeader from "./ScoreTableHeader";
 import PlayerScoreRow from "./PlayerScoreRow";
 import PlayerScoreEditRow from "./PlayerScoreEditRow";
-import { updatePlayerName, resetScores } from "../../redux/actions";
+import {
+  updatePlayerName,
+  updateGameScore,
+  resetScores
+} from "../../redux/actions";
 
 class ScoringScreen extends Component {
   constructor(props) {
@@ -26,10 +30,8 @@ class ScoringScreen extends Component {
   onNameChange1 = player1 => this.props.updatePlayerName(1, player1);
   onNameChange2 = player2 => this.props.updatePlayerName(2, player2);
 
-  onGameChange = scoresPropName => {
-    return option => {
-      this.setState({ [scoresPropName]: option.label });
-    };
+  onGameChange = playerNumber => {
+    return option => this.props.updateGameScore(playerNumber, option.label);
   };
 
   // Provide appropriate setState depending on player and set for the player
@@ -53,7 +55,6 @@ class ScoringScreen extends Component {
     this.setState(prevState => ({ isEditing: !prevState.isEditing }));
 
   render() {
-    console.log("MATCH in Scoring screen:", this.props.match);
     return (
       <SafeAreaView style={styles.androidSafeArea}>
         <View style={scoreStyles.container}>
@@ -69,7 +70,7 @@ class ScoringScreen extends Component {
                   gameScore={this.props.match.gameScore1}
                   setScores={this.props.match.scores1}
                   onNameChange={this.onNameChange1}
-                  onGameChange={this.onGameChange("gameScore1")}
+                  onGameChange={this.onGameChange(1)}
                   onScoreChange={this.onScoreChange("scores1")}
                 />
                 <PlayerScoreEditRow
@@ -77,7 +78,7 @@ class ScoringScreen extends Component {
                   gameScore={this.props.match.gameScore2}
                   setScores={this.props.match.scores2}
                   onNameChange={this.onNameChange2}
-                  onGameChange={this.onGameChange("gameScore2")}
+                  onGameChange={this.onGameChange(2)}
                   onScoreChange={this.onScoreChange("scores2")}
                 />
               </>
@@ -108,7 +109,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ updatePlayerName, resetScores }, dispatch);
+  return bindActionCreators(
+    { updatePlayerName, updateGameScore, resetScores },
+    dispatch
+  );
 };
 
 export default connect(
