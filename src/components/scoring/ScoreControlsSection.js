@@ -8,8 +8,11 @@ import Btn from "../common/Btn";
 import {
   updatePlayerName,
   updateGameScore,
-  updateSetScore
+  updateSetScore,
+  updateSetAfterGameEnd
 } from "../../redux/actions";
+
+const gameScores = ["0", "15", "30", "40", "Adv"];
 
 class ScoreDisplaySection extends Component {
   constructor(props) {
@@ -23,11 +26,53 @@ class ScoreDisplaySection extends Component {
   incrementGameScore = playerNumber => {
     return () => {
       const { match } = this.props;
-      var score = playerNumber == 1 ? match.gameScore1 : match.gameScore2;
+      const score = playerNumber == 1 ? match.gameScore1 : match.gameScore2;
+      const opponentScore =
+        playerNumber == 1 ? match.gameScore2 : match.gameScore1;
 
       // logic to determine next score or finish current game
+      switch (score) {
+        case "0":
+          this.props.updateGameScore(playerNumber, "15");
+          break;
+        case "15":
+          this.props.updateGameScore(playerNumber, "30");
+          break;
+        case "30":
+          this.props.updateGameScore(playerNumber, "40");
+          break;
+        case "40":
+          if (opponentScore === "40")
+            this.props.updateGameScore(playerNumber, "Adv");
+          else {
+            // update both scores and respective set
+            const playerSetScore =
+              playerNumber == 1
+                ? match.scores1[match.currentSet - 1]
+                : match.scores2[match.currentSet - 1];
+            const opponentSetScore =
+              playerNumber == 1
+                ? match.scores2[match.currentSet - 1]
+                : match.scores1[match.currentSet - 1];
+            let newPlayerSetNum = parseInt(playerSetScore) + 1;
+            let opponentSetNum = parseInt(opponentSetScore);
 
-      this.props.updateGameScore(playerNumber, score);
+            const isNewSet =
+              newPlayerSetNum >= 6 && newPlayerSetNum - opponentSetNum > 1;
+            const setNumber = isNewSet
+              ? match.currentSet + 1
+              : match.currentSet;
+
+            this.props.updateSetAfterGameEnd(
+              playerNumber,
+              match.currentSet,
+              newPlayerSetNum,
+              setNumber
+            );
+          }
+
+          break;
+      }
     };
   };
 
@@ -49,6 +94,7 @@ class ScoreDisplaySection extends Component {
   };
 
   render() {
+    console.log("render");
     const { match } = this.props;
     return (
       <View style={controlStyles.container}>
@@ -111,7 +157,12 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
-    { updatePlayerName, updateGameScore, updateSetScore },
+    {
+      updatePlayerName,
+      updateGameScore,
+      updateSetScore,
+      updateSetAfterGameEnd
+    },
     dispatch
   );
 };

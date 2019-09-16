@@ -5,6 +5,7 @@ import {
   UPDATE_GAME_SCORE_2,
   UPDATE_SET_SCORE_1,
   UPDATE_SET_SCORE_2,
+  UPDATE_CURRENT_SET,
   RESET_SCORES
 } from "../actions";
 
@@ -22,6 +23,9 @@ const initialState = {
 
 const matchReducer = (state = initialState, action) => {
   switch (action.type) {
+    case UPDATE_CURRENT_SET:
+      return merge(state, { currentSet: action.payload });
+
     case UPDATE_PLAYER_1_NAME:
       return merge(state, { player1: action.payload });
     case UPDATE_PLAYER_2_NAME:
