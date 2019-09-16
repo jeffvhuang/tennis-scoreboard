@@ -5,7 +5,8 @@ export const colours = {
   white: "#fff",
   transparentBlack: "rgba(0, 0, 0, 0.5)",
   main: "royalblue",
-  grey: "gainsboro"
+  grey: "gainsboro",
+  red: "red"
 };
 
 export const styles = StyleSheet.create({

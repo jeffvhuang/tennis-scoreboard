@@ -11,6 +11,7 @@ import {
 const merge = (prev, next) => Object.assign({}, prev, next);
 
 const initialState = {
+  currentSet: 1,
   player1: "Player 1",
   player2: "Player 2",
   gameScore1: "0",

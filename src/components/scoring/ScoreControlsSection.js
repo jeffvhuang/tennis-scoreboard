@@ -25,7 +25,7 @@ class ScoreDisplaySection extends Component {
       const { match } = this.props;
       var score = playerNumber == 1 ? match.gameScore1 : match.gameScore2;
 
-      // logic to determine  next score or finish current game
+      // logic to determine next score or finish current game
 
       this.props.updateGameScore(playerNumber, score);
     };
@@ -53,12 +53,11 @@ class ScoreDisplaySection extends Component {
     return (
       <View style={controlStyles.container}>
         <View style={controlStyles.nameRow}>
-          <View style={controlStyles.playerName}>
-            <Text>{match.player1}</Text>
+          <View style={controlStyles.playerNameView}>
+            <Text style={controlStyles.text}>{match.player1}</Text>
           </View>
-          <View style={controlStyles.time}></View>
-          <View style={controlStyles.playerName}>
-            <Text>{match.player2}</Text>
+          <View style={controlStyles.playerNameView}>
+            <Text style={controlStyles.text}>{match.player2}</Text>
           </View>
         </View>
         <View style={controlStyles.gameControlRow}>
@@ -67,6 +66,7 @@ class ScoreDisplaySection extends Component {
               title="-"
               onPress={this.decrementGameScore(1)}
               style={controlStyles.decrementBtn}
+              textStyle={controlStyles.decrementBtnText}
             />
             <Btn
               title={match.gameScore1}
@@ -84,6 +84,7 @@ class ScoreDisplaySection extends Component {
               title="-"
               onPress={this.decrementGameScore(2)}
               style={controlStyles.decrementBtn}
+              textStyle={controlStyles.decrementBtnText}
             />
           </View>
         </View>
@@ -95,6 +96,7 @@ class ScoreDisplaySection extends Component {
               title="Fault"
               onPress={this.fault}
               style={controlStyles.controlBtn}
+              textStyle={controlStyles.controlBtnText}
             />
           </View>
         </View>
