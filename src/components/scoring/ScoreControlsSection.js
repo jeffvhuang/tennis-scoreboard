@@ -27,7 +27,7 @@ class ScoreDisplaySection extends Component {
 
   componentDidMount() {
     // this.props.updateCurrentSet(1);
-    this.props.resetScores();
+    // this.props.resetScores();
   }
 
   incrementGameScore = playerNumber => {
@@ -51,38 +51,41 @@ class ScoreDisplaySection extends Component {
         case "40":
           if (opponentScore === "40")
             this.props.updateGameScore(playerNumber, "Adv");
-          else {
-            // update both scores and respective set
-            const setIndex = match.currentSet - 1;
-            const playerSetScore =
-              playerNumber == 1
-                ? match.scores1[setIndex]
-                : match.scores2[setIndex];
-            const opponentSetScore =
-              playerNumber == 1
-                ? match.scores2[setIndex]
-                : match.scores1[setIndex];
-            let newPlayerSetNum = parseInt(playerSetScore) + 1;
-            let opponentSetNum = parseInt(opponentSetScore);
-
-            const isNewSet =
-              newPlayerSetNum >= 6 && newPlayerSetNum - opponentSetNum > 1;
-            const setNumber = isNewSet
-              ? match.currentSet + 1
-              : match.currentSet;
-
-            this.props.updateSetAfterGameEnd(
-              playerNumber,
-              match.currentSet,
-              newPlayerSetNum,
-              setNumber
-            );
+          else if (opponentScore == "Adv") {
+            const otherPlayer = playerNumber == 1 ? 2 : 1;
+            this.props.updateGameScore(otherPlayer, "40");
+          } else {
+            this.updateSetAfterGameEnd(playerNumber);
           }
-
           break;
-        // case "Adv":
+        case "Adv":
+          if (opponentScore != "Adv") this.updateSetAfterGameEnd(playerNumber);
+          break;
       }
     };
+  };
+
+  updateSetAfterGameEnd = playerNumber => {
+    const { match } = this.props;
+    const setIndex = match.currentSet - 1;
+    const playerSetScore =
+      playerNumber == 1 ? match.scores1[setIndex] : match.scores2[setIndex];
+    const opponentSetScore =
+      playerNumber == 1 ? match.scores2[setIndex] : match.scores1[setIndex];
+    const newPlayerSetNum = parseInt(playerSetScore) + 1;
+    const opponentSetNum = parseInt(opponentSetScore);
+
+    // Move to next set if current one is finished
+    const isNewSet =
+      newPlayerSetNum >= 6 && newPlayerSetNum - opponentSetNum > 1;
+    const setNumber = isNewSet ? match.currentSet + 1 : match.currentSet;
+
+    this.props.updateSetAfterGameEnd(
+      playerNumber,
+      match.currentSet,
+      newPlayerSetNum,
+      setNumber
+    );
   };
 
   decrementGameScore = playerNumber => {
