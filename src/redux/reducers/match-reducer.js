@@ -6,6 +6,7 @@ import {
   UPDATE_SET_SCORE_1,
   UPDATE_SET_SCORE_2,
   UPDATE_CURRENT_SET,
+  CHANGE_SERVER,
   RESET_SCORES
 } from "../actions";
 
@@ -18,7 +19,8 @@ const initialState = {
   gameScore1: "0",
   gameScore2: "0",
   scores1: ["0", "0", "0"],
-  scores2: ["0", "0", "0"]
+  scores2: ["0", "0", "0"],
+  isPlayer1Serving: true
 };
 
 const matchReducer = (state = initialState, action) => {
@@ -45,6 +47,8 @@ const matchReducer = (state = initialState, action) => {
       scores2[action.setIndex] = action.payload;
       return merge(state, { scores2 });
 
+    case CHANGE_SERVER:
+      return merge(state, { isPlayer1Serving: !state.isPlayer1Serving });
     case RESET_SCORES:
       return initialState;
     default:

@@ -6,6 +6,7 @@ export const UPDATE_GAME_SCORE_2 = "UPDATE_GAME_SCORE_2";
 export const UPDATE_SET_SCORE_1 = "UPDATE_SET_SCORE_1";
 export const UPDATE_SET_SCORE_2 = "UPDATE_SET_SCORE_2";
 export const UPDATE_CURRENT_SET = "UPDATE_CURRENT_SET";
+export const CHANGE_SERVER = "CHANGE_SERVER";
 export const RESET_SCORES = "RESET_SCORES";
 
 // action creators
@@ -47,10 +48,9 @@ export const updateSetAfterGameEnd = (
   if (currentSet != newSetNumber) dispatch(updateCurrentSet(newSetNumber));
 };
 
-// export const addContact = newContact => ({
-//   type: UPDATE_CONTACT,
-//   payload: newContact,
-// })
+export const changeServer = () => ({
+  type: CHANGE_SERVER
+});
 
 // async action creator
 // export const logInUser = (username, password, loginFn = login) => async dispatch => {

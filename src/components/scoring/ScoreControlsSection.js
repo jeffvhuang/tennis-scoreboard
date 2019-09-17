@@ -11,10 +11,9 @@ import {
   updateSetScore,
   updateSetAfterGameEnd,
   updateCurrentSet,
-  resetScores
+  resetScores,
+  changeServer
 } from "../../redux/actions";
-
-const gameScores = ["0", "15", "30", "40", "Adv"];
 
 class ScoreDisplaySection extends Component {
   constructor(props) {
@@ -184,6 +183,7 @@ const mapDispatchToProps = dispatch => {
       updateSetScore,
       updateSetAfterGameEnd,
       updateCurrentSet,
+      changeServer,
       resetScores
     },
     dispatch
