@@ -1,39 +1,54 @@
+import { createStringConstants } from "../helpers/constants";
+
 // action types
-export const UPDATE_PLAYER_1_NAME = "UPDATE_PLAYER_1_NAME";
-export const UPDATE_PLAYER_2_NAME = "UPDATE_PLAYER_2_NAME";
-export const UPDATE_GAME_SCORE_1 = "UPDATE_GAME_SCORE_1";
-export const UPDATE_GAME_SCORE_2 = "UPDATE_GAME_SCORE_2";
-export const UPDATE_SET_SCORE_1 = "UPDATE_SET_SCORE_1";
-export const UPDATE_SET_SCORE_2 = "UPDATE_SET_SCORE_2";
-export const UPDATE_CURRENT_SET = "UPDATE_CURRENT_SET";
-export const CHANGE_SERVER = "CHANGE_SERVER";
-export const RESET_SCORES = "RESET_SCORES";
+const matchActions = [
+  "UPDATE_PLAYER_1_NAME",
+  "UPDATE_PLAYER_2_NAME",
+  "UPDATE_GAME_SCORE_1",
+  "UPDATE_GAME_SCORE_2",
+  "UPDATE_SET_SCORE_1",
+  "UPDATE_SET_SCORE_2",
+  "UPDATE_CURRENT_SET",
+  "CHANGE_SERVER",
+  "RESET_SCORES"
+];
+
+export const ACTIONS = createStringConstants(...matchActions);
 
 // action creators
 export const updatePlayerName = (playerNumber, name) => ({
-  type: playerNumber === 1 ? UPDATE_PLAYER_1_NAME : UPDATE_PLAYER_2_NAME,
+  type:
+    playerNumber === 1
+      ? ACTIONS.UPDATE_PLAYER_1_NAME
+      : ACTIONS.UPDATE_PLAYER_2_NAME,
   payload: name
 });
 
 export const updateGameScore = (playerNumber, score) => ({
-  type: playerNumber === 1 ? UPDATE_GAME_SCORE_1 : UPDATE_GAME_SCORE_2,
+  type:
+    playerNumber === 1
+      ? ACTIONS.UPDATE_GAME_SCORE_1
+      : ACTIONS.UPDATE_GAME_SCORE_2,
   payload: score
 });
 
 // setIndex = index in array (eg. If updating first set, setIndex = 0)
 export const updateSetScore = (playerNumber, setIndex, score) => ({
-  type: playerNumber === 1 ? UPDATE_SET_SCORE_1 : UPDATE_SET_SCORE_2,
+  type:
+    playerNumber === 1
+      ? ACTIONS.UPDATE_SET_SCORE_1
+      : ACTIONS.UPDATE_SET_SCORE_2,
   setIndex,
   payload: score
 });
 
 export const updateCurrentSet = number => ({
-  type: UPDATE_CURRENT_SET,
+  type: ACTIONS.UPDATE_CURRENT_SET,
   payload: number
 });
 
 export const resetScores = () => ({
-  type: RESET_SCORES
+  type: ACTIONS.RESET_SCORES
 });
 
 export const updateSetAfterGameEnd = (
@@ -49,7 +64,7 @@ export const updateSetAfterGameEnd = (
 };
 
 export const changeServer = () => ({
-  type: CHANGE_SERVER
+  type: ACTIONS.CHANGE_SERVER
 });
 
 // async action creator
