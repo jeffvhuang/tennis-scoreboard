@@ -43,8 +43,8 @@ export const updateSetAfterGameEnd = (
 ) => dispatch => {
   dispatch(updateGameScore(1, "0"));
   dispatch(updateGameScore(2, "0"));
-  dispatch(updateSetScore(playerNumber, currentSet, setScore.toString()));
-  dispatch(updateCurrentSet(newSetNumber));
+  dispatch(updateSetScore(playerNumber, currentSet - 1, setScore.toString()));
+  if (currentSet != newSetNumber) dispatch(updateCurrentSet(newSetNumber));
 };
 
 // export const addContact = newContact => ({

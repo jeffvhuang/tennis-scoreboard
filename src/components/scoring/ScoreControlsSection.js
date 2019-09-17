@@ -9,7 +9,9 @@ import {
   updatePlayerName,
   updateGameScore,
   updateSetScore,
-  updateSetAfterGameEnd
+  updateSetAfterGameEnd,
+  updateCurrentSet,
+  resetScores
 } from "../../redux/actions";
 
 const gameScores = ["0", "15", "30", "40", "Adv"];
@@ -21,6 +23,11 @@ class ScoreDisplaySection extends Component {
     this.state = {
       fault: false
     };
+  }
+
+  componentDidMount() {
+    // this.props.updateCurrentSet(1);
+    this.props.resetScores();
   }
 
   incrementGameScore = playerNumber => {
@@ -46,14 +53,15 @@ class ScoreDisplaySection extends Component {
             this.props.updateGameScore(playerNumber, "Adv");
           else {
             // update both scores and respective set
+            const setIndex = match.currentSet - 1;
             const playerSetScore =
               playerNumber == 1
-                ? match.scores1[match.currentSet - 1]
-                : match.scores2[match.currentSet - 1];
+                ? match.scores1[setIndex]
+                : match.scores2[setIndex];
             const opponentSetScore =
               playerNumber == 1
-                ? match.scores2[match.currentSet - 1]
-                : match.scores1[match.currentSet - 1];
+                ? match.scores2[setIndex]
+                : match.scores1[setIndex];
             let newPlayerSetNum = parseInt(playerSetScore) + 1;
             let opponentSetNum = parseInt(opponentSetScore);
 
@@ -72,6 +80,7 @@ class ScoreDisplaySection extends Component {
           }
 
           break;
+        // case "Adv":
       }
     };
   };
@@ -94,8 +103,8 @@ class ScoreDisplaySection extends Component {
   };
 
   render() {
-    console.log("render");
     const { match } = this.props;
+    // console.log("match", match);
     return (
       <View style={controlStyles.container}>
         <View style={controlStyles.nameRow}>
@@ -161,7 +170,9 @@ const mapDispatchToProps = dispatch => {
       updatePlayerName,
       updateGameScore,
       updateSetScore,
-      updateSetAfterGameEnd
+      updateSetAfterGameEnd,
+      updateCurrentSet,
+      resetScores
     },
     dispatch
   );
