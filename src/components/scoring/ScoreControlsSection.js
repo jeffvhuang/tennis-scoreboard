@@ -32,28 +32,26 @@ class ScoreDisplaySection extends Component {
 
   incrementGameScore = playerNumber => {
     return () => {
-      const { match } = this.props;
+      const { match, updateGameScore } = this.props;
       const score = playerNumber == 1 ? match.gameScore1 : match.gameScore2;
       const opponentScore =
         playerNumber == 1 ? match.gameScore2 : match.gameScore1;
 
-      // logic to determine next score or finish current game
       switch (score) {
         case "0":
-          this.props.updateGameScore(playerNumber, "15");
+          updateGameScore(playerNumber, "15");
           break;
         case "15":
-          this.props.updateGameScore(playerNumber, "30");
+          updateGameScore(playerNumber, "30");
           break;
         case "30":
-          this.props.updateGameScore(playerNumber, "40");
+          updateGameScore(playerNumber, "40");
           break;
         case "40":
-          if (opponentScore === "40")
-            this.props.updateGameScore(playerNumber, "Adv");
+          if (opponentScore === "40") updateGameScore(playerNumber, "Adv");
           else if (opponentScore == "Adv") {
             const otherPlayer = playerNumber == 1 ? 2 : 1;
-            this.props.updateGameScore(otherPlayer, "40");
+            updateGameScore(otherPlayer, "40");
           } else {
             this.updateSetAfterGameEnd(playerNumber);
           }
@@ -90,12 +88,23 @@ class ScoreDisplaySection extends Component {
 
   decrementGameScore = playerNumber => {
     return () => {
-      const { match } = this.props;
+      const { match, updateGameScore } = this.props;
       var score = playerNumber == 1 ? match.gameScore1 : match.gameScore2;
 
-      // logic to determine previous score
-
-      this.props.updateGameScore(playerNumber, score);
+      switch (score) {
+        case "15":
+          updateGameScore(playerNumber, "0");
+          break;
+        case "30":
+          updateGameScore(playerNumber, "15");
+          break;
+        case "40":
+          updateGameScore(playerNumber, "30");
+          break;
+        case "Adv":
+          updateGameScore(playerNumber, "40");
+          break;
+      }
     };
   };
 
