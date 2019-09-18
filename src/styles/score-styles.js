@@ -46,8 +46,10 @@ export const scoreStyles = StyleSheet.create({
   player: {
     flex: 3,
     borderRightWidth: 1,
-    justifyContent: "center",
-    alignItems: "center"
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingLeft: 10
   },
   game: {
     flex: 1,
@@ -76,7 +78,7 @@ export const scoreStyles = StyleSheet.create({
   },
   playerName: {
     fontSize: moderateScale(26),
-    width: "95%",
+    flex: 8,
     textAlign: "left"
   },
   input: {
@@ -90,5 +92,10 @@ export const scoreStyles = StyleSheet.create({
   },
   gameDropdownItem: {
     fontSize: moderateScale(26)
+  },
+  tennisBall: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
   }
 });

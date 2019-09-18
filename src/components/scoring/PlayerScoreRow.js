@@ -1,19 +1,24 @@
 import React from "react";
 import { View, Text } from "react-native";
 import PropTypes from "prop-types";
+import { Ionicons } from "@expo/vector-icons";
 import { scoreStyles } from "../../styles/score-styles";
 
 const propTypes = {
   player: PropTypes.string.isRequired,
+  isServing: PropTypes.bool.isRequired,
   gameScore: PropTypes.string.isRequired,
   setScores: PropTypes.array.isRequired
 };
 
-const PlayerScoreRow = ({ player, gameScore, setScores }) => {
+const PlayerScoreRow = ({ player, isServing, gameScore, setScores }) => {
   return player ? (
     <View style={scoreStyles.playerRow}>
       <View style={scoreStyles.player}>
         <Text style={scoreStyles.playerName}>{player}</Text>
+        <View style={scoreStyles.tennisBall}>
+          {isServing && <Ionicons name="md-tennisball" size={20} />}
+        </View>
       </View>
       <View style={scoreStyles.game}>
         <Text style={scoreStyles.score}>{gameScore}</Text>

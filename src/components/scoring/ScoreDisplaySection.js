@@ -59,6 +59,7 @@ class ScoreDisplaySection extends Component {
             <>
               <PlayerScoreEditRow
                 player={match.player1}
+                isServing={match.isPlayer1Serving}
                 gameScore={match.gameScore1}
                 setScores={match.scores1}
                 onNameChange={this.onNameChange1}
@@ -67,6 +68,7 @@ class ScoreDisplaySection extends Component {
               />
               <PlayerScoreEditRow
                 player={match.player2}
+                isServing={!match.isPlayer1Serving}
                 gameScore={match.gameScore2}
                 setScores={match.scores2}
                 onNameChange={this.onNameChange2}
@@ -78,11 +80,13 @@ class ScoreDisplaySection extends Component {
             <>
               <PlayerScoreRow
                 player={match.player1}
+                isServing={match.isPlayer1Serving}
                 gameScore={match.gameScore1}
                 setScores={match.scores1}
               />
               <PlayerScoreRow
                 player={match.player2}
+                isServing={!match.isPlayer1Serving}
                 gameScore={match.gameScore2}
                 setScores={match.scores2}
               />
