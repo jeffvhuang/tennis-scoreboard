@@ -77,11 +77,14 @@ class ScoreDisplaySection extends Component {
       newPlayerSetNum >= 6 && newPlayerSetNum - opponentSetNum > 1;
     const setNumber = isNewSet ? match.currentSet + 1 : match.currentSet;
 
+    const isTiebreak = newPlayerSetNum == 6 && opponentSetNum == 6;
+
     this.props.updateSetAfterGameEnd(
       playerNumber,
       match.currentSet,
       newPlayerSetNum,
-      setNumber
+      setNumber,
+      isTiebreak
     );
   };
 
@@ -115,7 +118,7 @@ class ScoreDisplaySection extends Component {
 
   render() {
     const { match } = this.props;
-    // console.log("match", match);
+    console.log("match", match);
     return (
       <View style={controlStyles.container}>
         <View style={controlStyles.nameRow}>

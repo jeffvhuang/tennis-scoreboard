@@ -10,7 +10,8 @@ const initialState = {
   gameScore2: "0",
   scores1: ["0", "0", "0"],
   scores2: ["0", "0", "0"],
-  isPlayer1Serving: true
+  isPlayer1Serving: true,
+  isTiebreak: false
 };
 
 const matchReducer = (state = initialState, action) => {
@@ -39,6 +40,8 @@ const matchReducer = (state = initialState, action) => {
 
     case A.CHANGE_SERVER:
       return merge(state, { isPlayer1Serving: !state.isPlayer1Serving });
+    case A.SET_TIEBREAK:
+      return merge(state, { isTiebreak: action.payload });
     case A.RESET_SCORES:
       return initialState;
     default:

@@ -10,6 +10,7 @@ const matchActions = [
   "UPDATE_SET_SCORE_2",
   "UPDATE_CURRENT_SET",
   "CHANGE_SERVER",
+  "SET_TIEBREAK",
   "RESET_SCORES"
 ];
 
@@ -55,16 +56,24 @@ export const updateSetAfterGameEnd = (
   playerNumber,
   currentSet,
   setScore,
-  newSetNumber
+  newSetNumber,
+  isTieBreak
 ) => dispatch => {
   dispatch(updateGameScore(1, "0"));
   dispatch(updateGameScore(2, "0"));
   dispatch(updateSetScore(playerNumber, currentSet - 1, setScore.toString()));
+  dispatch(changeServer());
   if (currentSet != newSetNumber) dispatch(updateCurrentSet(newSetNumber));
+  dispatch(setTiebreak(isTieBreak));
 };
 
 export const changeServer = () => ({
   type: ACTIONS.CHANGE_SERVER
+});
+
+export const setTiebreak = isTiebreak => ({
+  type: ACTIONS.SET_TIEBREAK,
+  payload: isTiebreak
 });
 
 // async action creator
