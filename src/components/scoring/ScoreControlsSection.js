@@ -11,6 +11,7 @@ import {
   updateSetScore,
   updateSetAfterGameEnd,
   updateCurrentSet,
+  updateSetsWon,
   resetScores,
   changeServer,
   changeFault,
@@ -28,40 +29,39 @@ class ScoreDisplaySection extends Component {
 
   componentDidMount() {
     // this.props.updateCurrentSet(1);
-    // this.props.resetScores();
+    this.props.resetScores();
   }
 
-  incrementGameScore = playerNumber => {
+  incrementGameScore = playerNum => {
     return () => {
       const { match, changeGameScore } = this.props;
-      const score = playerNumber == 1 ? match.gameScore1 : match.gameScore2;
+      const score = playerNum == 1 ? match.gameScore1 : match.gameScore2;
       const opponentScore =
-        playerNumber == 1 ? match.gameScore2 : match.gameScore1;
+        playerNum == 1 ? match.gameScore2 : match.gameScore1;
 
       if (!match.isTiebreak) {
         switch (score) {
           case "0":
-            changeGameScore(playerNumber, "15", match.isFault);
+            changeGameScore(playerNum, "15", match.isFault);
             break;
           case "15":
-            changeGameScore(playerNumber, "30", match.isFault);
+            changeGameScore(playerNum, "30", match.isFault);
             break;
           case "30":
-            changeGameScore(playerNumber, "40", match.isFault);
+            changeGameScore(playerNum, "40", match.isFault);
             break;
           case "40":
             if (opponentScore === "40")
-              changeGameScore(playerNumber, "Adv", match.isFault);
+              changeGameScore(playerNum, "Adv", match.isFault);
             else if (opponentScore == "Adv") {
-              const otherPlayer = playerNumber == 1 ? 2 : 1;
+              const otherPlayer = playerNum == 1 ? 2 : 1;
               changeGameScore(otherPlayer, "40", match.isFault);
             } else {
-              this.updateSetAfterGameEnd(playerNumber);
+              this.updateSetAfterGameEnd(playerNum);
             }
             break;
           case "Adv":
-            if (opponentScore != "Adv")
-              this.updateSetAfterGameEnd(playerNumber);
+            if (opponentScore != "Adv") this.updateSetAfterGameEnd(playerNum);
             break;
         }
       } else {
@@ -70,29 +70,27 @@ class ScoreDisplaySection extends Component {
         const isTiebreakOver =
           playerScoreNum > 6 && playerScoreNum - opponentScoreNum > 1;
 
-        if (isTiebreakOver) this.updateSetAfterGameEnd(playerNumber);
+        if (isTiebreakOver) this.updateSetAfterGameEnd(playerNum);
         else
-          changeGameScore(
-            playerNumber,
-            playerScoreNum.toString(),
-            match.isFault
-          );
+          changeGameScore(playerNum, playerScoreNum.toString(), match.isFault);
       }
     };
   };
 
-  updateSetAfterGameEnd = playerNumber => {
-    const { match, updateCurrentSet, setTiebreak } = this.props;
+  updateSetAfterGameEnd = playerNum => {
+    const { match, updateCurrentSet, setTiebreak, updateSetsWon } = this.props;
     const setIndex = match.currentSet - 1;
     const playerSetScore =
-      playerNumber == 1 ? match.scores1[setIndex] : match.scores2[setIndex];
+      playerNum == 1 ? match.scores1[setIndex] : match.scores2[setIndex];
     const opponentSetScore =
-      playerNumber == 1 ? match.scores2[setIndex] : match.scores1[setIndex];
+      playerNum == 1 ? match.scores2[setIndex] : match.scores1[setIndex];
     const newPlayerSetScoreNum = parseInt(playerSetScore) + 1;
     const opponentSetNum = parseInt(opponentSetScore);
+    const playerSetsWon =
+      playerNum == 1 ? match.player1SetsWon : match.player2SetsWon;
 
     this.props.updateSetAfterGameEnd(
-      playerNumber,
+      playerNum,
       match.currentSet,
       newPlayerSetScoreNum
     );
@@ -100,41 +98,45 @@ class ScoreDisplaySection extends Component {
     // Move to next set if current one is finished
     // Enter or exit tiebreak if needed
     if (!match.isTiebreak) {
-      const isNewSet =
+      const isSetFinished =
         newPlayerSetScoreNum >= 6 && newPlayerSetScoreNum - opponentSetNum > 1;
       const isEnteringTiebreak =
         newPlayerSetScoreNum == 6 && opponentSetNum == 6;
-      if (isNewSet) updateCurrentSet(match.currentSet + 1);
-      if (isEnteringTiebreak) setTiebreak(true);
+
+      if (isSetFinished) {
+        updateSetsWon(playerNum, playerSetsWon + 1);
+        updateCurrentSet(match.currentSet + 1);
+      } else if (isEnteringTiebreak) setTiebreak(true);
     } else {
+      updateSetsWon(playerNum, playerSetsWon + 1);
       updateCurrentSet(match.currentSet + 1);
       setTiebreak(false);
     }
   };
 
-  decrementGameScore = playerNumber => {
+  decrementGameScore = playerNum => {
     return () => {
       const { match, changeGameScore } = this.props;
-      var score = playerNumber == 1 ? match.gameScore1 : match.gameScore2;
+      var score = playerNum == 1 ? match.gameScore1 : match.gameScore2;
 
       if (!match.isTiebreak) {
         switch (score) {
           case "15":
-            changeGameScore(playerNumber, "0", match.isFault);
+            changeGameScore(playerNum, "0", match.isFault);
             break;
           case "30":
-            changeGameScore(playerNumber, "15", match.isFault);
+            changeGameScore(playerNum, "15", match.isFault);
             break;
           case "40":
-            changeGameScore(playerNumber, "30", match.isFault);
+            changeGameScore(playerNum, "30", match.isFault);
             break;
           case "Adv":
-            changeGameScore(playerNumber, "40", match.isFault);
+            changeGameScore(playerNum, "40", match.isFault);
             break;
         }
       } else {
         const playerScoreNum = score != "0" ? parseInt(score) - 1 : 0;
-        changeGameScore(playerNumber, playerScoreNum.toString(), match.isFault);
+        changeGameScore(playerNum, playerScoreNum.toString(), match.isFault);
       }
     };
   };
@@ -222,7 +224,8 @@ const mapDispatchToProps = dispatch => {
       changeServer,
       resetScores,
       changeFault,
-      setTiebreak
+      setTiebreak,
+      updateSetsWon
     },
     dispatch
   );

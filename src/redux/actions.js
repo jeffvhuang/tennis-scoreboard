@@ -8,6 +8,8 @@ const matchActions = [
   "UPDATE_GAME_SCORE_2",
   "UPDATE_SET_SCORE_1",
   "UPDATE_SET_SCORE_2",
+  "UPDATE_SETS_WON_1",
+  "UPDATE_SETS_WON_2",
   "UPDATE_CURRENT_SET",
   "CHANGE_SERVER",
   "SET_TIEBREAK",
@@ -18,35 +20,36 @@ const matchActions = [
 export const ACTIONS = createStringConstants(...matchActions);
 
 // action creators
-export const updatePlayerName = (playerNumber, name) => ({
+export const updatePlayerName = (playerNum, name) => ({
   type:
-    playerNumber === 1
+    playerNum === 1
       ? ACTIONS.UPDATE_PLAYER_1_NAME
       : ACTIONS.UPDATE_PLAYER_2_NAME,
   payload: name
 });
 
-export const updateGameScore = (playerNumber, score) => ({
+export const updateGameScore = (playerNum, score) => ({
   type:
-    playerNumber === 1
-      ? ACTIONS.UPDATE_GAME_SCORE_1
-      : ACTIONS.UPDATE_GAME_SCORE_2,
+    playerNum === 1 ? ACTIONS.UPDATE_GAME_SCORE_1 : ACTIONS.UPDATE_GAME_SCORE_2,
   payload: score
 });
 
-export const changeGameScore = (playerNumber, score, isFault) => dispatch => {
+export const changeGameScore = (playerNum, score, isFault) => dispatch => {
   if (isFault) dispatch(changeFault());
-  dispatch(updateGameScore(playerNumber, score));
+  dispatch(updateGameScore(playerNum, score));
 };
 
 // setIndex = index in array (eg. If updating first set, setIndex = 0)
-export const updateSetScore = (playerNumber, setIndex, score) => ({
+export const updateSetScore = (playerNum, setIndex, score) => ({
   type:
-    playerNumber === 1
-      ? ACTIONS.UPDATE_SET_SCORE_1
-      : ACTIONS.UPDATE_SET_SCORE_2,
+    playerNum === 1 ? ACTIONS.UPDATE_SET_SCORE_1 : ACTIONS.UPDATE_SET_SCORE_2,
   setIndex,
   payload: score
+});
+
+export const updateSetsWon = (playerNum, setsWon) => ({
+  type: playerNum === 1 ? ACTIONS.UPDATE_SETS_WON_1 : ACTIONS.UPDATE_SETS_WON_2,
+  payload: setsWon
 });
 
 export const updateCurrentSet = number => ({
@@ -61,13 +64,13 @@ export const resetScores = () => ({
 // Increment the score within the set after a game ends
 // This includes updating to new set or tiebreak depending on the situation
 export const updateSetAfterGameEnd = (
-  playerNumber,
+  playerNum,
   currentSet,
   setScore
 ) => dispatch => {
   dispatch(updateGameScore(1, "0"));
   dispatch(updateGameScore(2, "0"));
-  dispatch(updateSetScore(playerNumber, currentSet - 1, setScore.toString()));
+  dispatch(updateSetScore(playerNum, currentSet - 1, setScore.toString()));
   dispatch(changeServer());
 };
 

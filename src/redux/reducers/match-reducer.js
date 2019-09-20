@@ -12,7 +12,9 @@ const initialState = {
   scores2: ["0", "0", "0"],
   isPlayer1Serving: true,
   isTiebreak: false,
-  isFault: false
+  isFault: false,
+  player1SetsWon: 0,
+  player2SetsWon: 0
 };
 
 const matchReducer = (state = initialState, action) => {
@@ -38,6 +40,11 @@ const matchReducer = (state = initialState, action) => {
       const scores2 = [...state.scores2];
       scores2[action.setIndex] = action.payload;
       return merge(state, { scores2 });
+
+    case A.UPDATE_SETS_WON_1:
+      return merge(state, { player1SetsWon: action.payload });
+    case A.UPDATE_SETS_WON_2:
+      return merge(state, { player2SetsWon: action.payload });
 
     case A.CHANGE_SERVER:
       return merge(state, { isPlayer1Serving: !state.isPlayer1Serving });
