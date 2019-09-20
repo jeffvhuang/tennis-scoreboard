@@ -3,25 +3,24 @@ import { ACTIONS as A } from "../actions";
 const merge = (prev, next) => Object.assign({}, prev, next);
 
 const initialState = {
-  currentSet: 1,
   player1: "Player 1",
   player2: "Player 2",
   gameScore1: "0",
-  gameScore2: "0",
-  scores1: ["0", "0", "0"],
-  scores2: ["0", "0", "0"],
+  gameScore2: "40",
+  scores1: ["4", "4", ""],
+  scores2: ["6", "5", ""],
+  player1SetsWon: 0,
+  player2SetsWon: 1,
+  currentSet: 2,
   isPlayer1Serving: true,
   isTiebreak: false,
   isFault: false,
-  player1SetsWon: 0,
-  player2SetsWon: 0
+  setsToWin: 2,
+  winner: 0
 };
 
 const matchReducer = (state = initialState, action) => {
   switch (action.type) {
-    case A.UPDATE_CURRENT_SET:
-      return merge(state, { currentSet: action.payload });
-
     case A.UPDATE_PLAYER_1_NAME:
       return merge(state, { player1: action.payload });
     case A.UPDATE_PLAYER_2_NAME:
@@ -46,12 +45,17 @@ const matchReducer = (state = initialState, action) => {
     case A.UPDATE_SETS_WON_2:
       return merge(state, { player2SetsWon: action.payload });
 
+    case A.UPDATE_CURRENT_SET:
+      return merge(state, { currentSet: action.payload });
+    case A.CHANGE_FAULT:
+      return merge(state, { isFault: !state.isFault });
     case A.CHANGE_SERVER:
       return merge(state, { isPlayer1Serving: !state.isPlayer1Serving });
     case A.SET_TIEBREAK:
       return merge(state, { isTiebreak: action.payload });
-    case A.CHANGE_FAULT:
-      return merge(state, { isFault: !state.isFault });
+    case A.SET_WINNER:
+      return merge(state, { winner: action.payload });
+
     case A.RESET_SCORES:
       return initialState;
     default:

@@ -13,6 +13,7 @@ const matchActions = [
   "UPDATE_CURRENT_SET",
   "CHANGE_SERVER",
   "SET_TIEBREAK",
+  "SET_WINNER",
   "CHANGE_FAULT",
   "RESET_SCORES"
 ];
@@ -34,6 +35,7 @@ export const updateGameScore = (playerNum, score) => ({
   payload: score
 });
 
+// Thunk function
 export const changeGameScore = (playerNum, score, isFault) => dispatch => {
   if (isFault) dispatch(changeFault());
   dispatch(updateGameScore(playerNum, score));
@@ -52,15 +54,7 @@ export const updateSetsWon = (playerNum, setsWon) => ({
   payload: setsWon
 });
 
-export const updateCurrentSet = number => ({
-  type: ACTIONS.UPDATE_CURRENT_SET,
-  payload: number
-});
-
-export const resetScores = () => ({
-  type: ACTIONS.RESET_SCORES
-});
-
+// Thunk function
 // Increment the score within the set after a game ends
 // This includes updating to new set or tiebreak depending on the situation
 export const updateSetAfterGameEnd = (
@@ -74,6 +68,15 @@ export const updateSetAfterGameEnd = (
   dispatch(changeServer());
 };
 
+export const updateCurrentSet = number => ({
+  type: ACTIONS.UPDATE_CURRENT_SET,
+  payload: number
+});
+
+export const changeFault = () => ({
+  type: ACTIONS.CHANGE_FAULT
+});
+
 export const changeServer = () => ({
   type: ACTIONS.CHANGE_SERVER
 });
@@ -83,8 +86,13 @@ export const setTiebreak = isTiebreak => ({
   payload: isTiebreak
 });
 
-export const changeFault = () => ({
-  type: ACTIONS.CHANGE_FAULT
+export const setWinner = playerNum => ({
+  type: ACTIONS.SET_WINNER,
+  payload: playerNum
+});
+
+export const resetScores = () => ({
+  type: ACTIONS.RESET_SCORES
 });
 
 // async action creator

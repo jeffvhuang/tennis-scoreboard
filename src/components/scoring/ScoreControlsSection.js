@@ -15,7 +15,8 @@ import {
   resetScores,
   changeServer,
   changeFault,
-  setTiebreak
+  setTiebreak,
+  setWinner
 } from "../../redux/actions";
 
 class ScoreDisplaySection extends Component {
@@ -78,12 +79,15 @@ class ScoreDisplaySection extends Component {
   };
 
   updateSetAfterGameEnd = playerNum => {
-    const { match, updateCurrentSet, setTiebreak, updateSetsWon } = this.props;
+    const { match, updateCurrentSet, updateSetsWon, setWinner } = this.props;
     const setIndex = match.currentSet - 1;
-    const playerSetScore =
+    let playerSetScore =
       playerNum == 1 ? match.scores1[setIndex] : match.scores2[setIndex];
-    const opponentSetScore =
+    let opponentSetScore =
       playerNum == 1 ? match.scores2[setIndex] : match.scores1[setIndex];
+    if (isNaN(playerSetScore)) playerSetScore = "0";
+    if (isNaN(opponentSetScore)) opponentSetScore = "0";
+
     const newPlayerSetScoreNum = parseInt(playerSetScore) + 1;
     const opponentSetNum = parseInt(opponentSetScore);
     const playerSetsWon =
@@ -105,12 +109,20 @@ class ScoreDisplaySection extends Component {
 
       if (isSetFinished) {
         updateSetsWon(playerNum, playerSetsWon + 1);
-        updateCurrentSet(match.currentSet + 1);
-      } else if (isEnteringTiebreak) setTiebreak(true);
+        console.log(playerSetsWon);
+        if (playerSetsWon + 1 === match.setsToWin) setWinner(playerNum);
+        else updateCurrentSet(match.currentSet + 1);
+      } else if (isEnteringTiebreak) {
+        this.props.setTiebreak(true);
+      }
     } else {
       updateSetsWon(playerNum, playerSetsWon + 1);
-      updateCurrentSet(match.currentSet + 1);
-      setTiebreak(false);
+
+      if (playerSetsWon + 1 === match.setsToWin) setWinner(playerNum);
+      else {
+        updateCurrentSet(match.currentSet + 1);
+        this.props.setTiebreak(false);
+      }
     }
   };
 
@@ -156,14 +168,26 @@ class ScoreDisplaySection extends Component {
     console.log("match", match);
     return (
       <View style={controlStyles.container}>
-        <View style={controlStyles.nameRow}>
-          <View style={controlStyles.playerNameView}>
-            <Text style={controlStyles.text}>{match.player1}</Text>
+        {match.winner > 0 ? (
+          <View style={controlStyles.nameRow}>
+            <View style={controlStyles.playerNameView}>
+              <Text style={controlStyles.text}>
+                {match.winner == 1
+                  ? `${match.player1} Wins`
+                  : `${match.player2} Wins`}
+              </Text>
+            </View>
           </View>
-          <View style={controlStyles.playerNameView}>
-            <Text style={controlStyles.text}>{match.player2}</Text>
+        ) : (
+          <View style={controlStyles.nameRow}>
+            <View style={controlStyles.playerNameView}>
+              <Text style={controlStyles.text}>{match.player1}</Text>
+            </View>
+            <View style={controlStyles.playerNameView}>
+              <Text style={controlStyles.text}>{match.player2}</Text>
+            </View>
           </View>
-        </View>
+        )}
         <View style={controlStyles.gameControlRow}>
           <View style={controlStyles.gameControls}>
             <Btn
@@ -225,6 +249,7 @@ const mapDispatchToProps = dispatch => {
       resetScores,
       changeFault,
       setTiebreak,
+      setWinner,
       updateSetsWon
     },
     dispatch
