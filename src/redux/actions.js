@@ -34,11 +34,7 @@ export const updateGameScore = (playerNumber, score) => ({
   payload: score
 });
 
-export const incrementGameScore = (
-  playerNumber,
-  score,
-  isFault
-) => dispatch => {
+export const changeGameScore = (playerNumber, score, isFault) => dispatch => {
   if (isFault) dispatch(changeFault());
   dispatch(updateGameScore(playerNumber, score));
 };

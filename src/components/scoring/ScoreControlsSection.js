@@ -7,8 +7,7 @@ import { controlStyles } from "../../styles/control-styles";
 import Btn from "../common/Btn";
 import {
   updatePlayerName,
-  updateGameScore,
-  incrementGameScore,
+  changeGameScore,
   updateSetScore,
   updateSetAfterGameEnd,
   updateCurrentSet,
@@ -34,7 +33,7 @@ class ScoreDisplaySection extends Component {
 
   incrementGameScore = playerNumber => {
     return () => {
-      const { match, incrementGameScore } = this.props;
+      const { match, changeGameScore } = this.props;
       const score = playerNumber == 1 ? match.gameScore1 : match.gameScore2;
       const opponentScore =
         playerNumber == 1 ? match.gameScore2 : match.gameScore1;
@@ -42,20 +41,20 @@ class ScoreDisplaySection extends Component {
       if (!match.isTiebreak) {
         switch (score) {
           case "0":
-            incrementGameScore(playerNumber, "15", match.isFault);
+            changeGameScore(playerNumber, "15", match.isFault);
             break;
           case "15":
-            incrementGameScore(playerNumber, "30", match.isFault);
+            changeGameScore(playerNumber, "30", match.isFault);
             break;
           case "30":
-            incrementGameScore(playerNumber, "40", match.isFault);
+            changeGameScore(playerNumber, "40", match.isFault);
             break;
           case "40":
             if (opponentScore === "40")
-              incrementGameScore(playerNumber, "Adv", match.isFault);
+              changeGameScore(playerNumber, "Adv", match.isFault);
             else if (opponentScore == "Adv") {
               const otherPlayer = playerNumber == 1 ? 2 : 1;
-              incrementGameScore(otherPlayer, "40", match.isFault);
+              changeGameScore(otherPlayer, "40", match.isFault);
             } else {
               this.updateSetAfterGameEnd(playerNumber);
             }
@@ -69,11 +68,11 @@ class ScoreDisplaySection extends Component {
         const playerScoreNum = parseInt(score) + 1;
         const opponentScoreNum = parseInt(opponentScore);
         const isTiebreakOver =
-          playerScoreNum > 6 && playerScoreNum - opponentScoreNum > 2;
+          playerScoreNum > 6 && playerScoreNum - opponentScoreNum > 1;
 
         if (isTiebreakOver) this.updateSetAfterGameEnd(playerNumber);
         else
-          incrementGameScore(
+          changeGameScore(
             playerNumber,
             playerScoreNum.toString(),
             match.isFault
@@ -115,22 +114,27 @@ class ScoreDisplaySection extends Component {
 
   decrementGameScore = playerNumber => {
     return () => {
-      const { match, updateGameScore } = this.props;
+      const { match, changeGameScore } = this.props;
       var score = playerNumber == 1 ? match.gameScore1 : match.gameScore2;
 
-      switch (score) {
-        case "15":
-          updateGameScore(playerNumber, "0");
-          break;
-        case "30":
-          updateGameScore(playerNumber, "15");
-          break;
-        case "40":
-          updateGameScore(playerNumber, "30");
-          break;
-        case "Adv":
-          updateGameScore(playerNumber, "40");
-          break;
+      if (!match.isTiebreak) {
+        switch (score) {
+          case "15":
+            changeGameScore(playerNumber, "0", match.isFault);
+            break;
+          case "30":
+            changeGameScore(playerNumber, "15", match.isFault);
+            break;
+          case "40":
+            changeGameScore(playerNumber, "30", match.isFault);
+            break;
+          case "Adv":
+            changeGameScore(playerNumber, "40", match.isFault);
+            break;
+        }
+      } else {
+        const playerScoreNum = score != "0" ? parseInt(score) - 1 : 0;
+        changeGameScore(playerNumber, playerScoreNum.toString(), match.isFault);
       }
     };
   };
@@ -211,8 +215,7 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
       updatePlayerName,
-      updateGameScore,
-      incrementGameScore,
+      changeGameScore,
       updateSetScore,
       updateSetAfterGameEnd,
       updateCurrentSet,
