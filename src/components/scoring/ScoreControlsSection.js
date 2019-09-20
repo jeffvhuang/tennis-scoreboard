@@ -14,7 +14,8 @@ import {
   updateCurrentSet,
   resetScores,
   changeServer,
-  changeFault
+  changeFault,
+  setTiebreak
 } from "../../redux/actions";
 
 class ScoreDisplaySection extends Component {
@@ -38,57 +39,78 @@ class ScoreDisplaySection extends Component {
       const opponentScore =
         playerNumber == 1 ? match.gameScore2 : match.gameScore1;
 
-      switch (score) {
-        case "0":
-          incrementGameScore(playerNumber, "15", match.isFault);
-          break;
-        case "15":
-          incrementGameScore(playerNumber, "30", match.isFault);
-          break;
-        case "30":
-          incrementGameScore(playerNumber, "40", match.isFault);
-          break;
-        case "40":
-          if (opponentScore === "40")
-            incrementGameScore(playerNumber, "Adv", match.isFault);
-          else if (opponentScore == "Adv") {
-            const otherPlayer = playerNumber == 1 ? 2 : 1;
-            incrementGameScore(otherPlayer, "40", match.isFault);
-          } else {
-            this.updateSetAfterGameEnd(playerNumber);
-          }
-          break;
-        case "Adv":
-          if (opponentScore != "Adv") this.updateSetAfterGameEnd(playerNumber);
-          break;
+      if (!match.isTiebreak) {
+        switch (score) {
+          case "0":
+            incrementGameScore(playerNumber, "15", match.isFault);
+            break;
+          case "15":
+            incrementGameScore(playerNumber, "30", match.isFault);
+            break;
+          case "30":
+            incrementGameScore(playerNumber, "40", match.isFault);
+            break;
+          case "40":
+            if (opponentScore === "40")
+              incrementGameScore(playerNumber, "Adv", match.isFault);
+            else if (opponentScore == "Adv") {
+              const otherPlayer = playerNumber == 1 ? 2 : 1;
+              incrementGameScore(otherPlayer, "40", match.isFault);
+            } else {
+              this.updateSetAfterGameEnd(playerNumber);
+            }
+            break;
+          case "Adv":
+            if (opponentScore != "Adv")
+              this.updateSetAfterGameEnd(playerNumber);
+            break;
+        }
+      } else {
+        const playerScoreNum = parseInt(score) + 1;
+        const opponentScoreNum = parseInt(opponentScore);
+        const isTiebreakOver =
+          playerScoreNum > 6 && playerScoreNum - opponentScoreNum > 2;
+
+        if (isTiebreakOver) this.updateSetAfterGameEnd(playerNumber);
+        else
+          incrementGameScore(
+            playerNumber,
+            playerScoreNum.toString(),
+            match.isFault
+          );
       }
     };
   };
 
   updateSetAfterGameEnd = playerNumber => {
-    const { match } = this.props;
+    const { match, updateCurrentSet, setTiebreak } = this.props;
     const setIndex = match.currentSet - 1;
     const playerSetScore =
       playerNumber == 1 ? match.scores1[setIndex] : match.scores2[setIndex];
     const opponentSetScore =
       playerNumber == 1 ? match.scores2[setIndex] : match.scores1[setIndex];
-    const newPlayerSetNum = parseInt(playerSetScore) + 1;
+    const newPlayerSetScoreNum = parseInt(playerSetScore) + 1;
     const opponentSetNum = parseInt(opponentSetScore);
-
-    // Move to next set if current one is finished
-    const isNewSet =
-      newPlayerSetNum >= 6 && newPlayerSetNum - opponentSetNum > 1;
-    const setNumber = isNewSet ? match.currentSet + 1 : match.currentSet;
-
-    const isTiebreak = newPlayerSetNum == 6 && opponentSetNum == 6;
 
     this.props.updateSetAfterGameEnd(
       playerNumber,
       match.currentSet,
-      newPlayerSetNum,
-      setNumber,
-      isTiebreak
+      newPlayerSetScoreNum
     );
+
+    // Move to next set if current one is finished
+    // Enter or exit tiebreak if needed
+    if (!match.isTiebreak) {
+      const isNewSet =
+        newPlayerSetScoreNum >= 6 && newPlayerSetScoreNum - opponentSetNum > 1;
+      const isEnteringTiebreak =
+        newPlayerSetScoreNum == 6 && opponentSetNum == 6;
+      if (isNewSet) updateCurrentSet(match.currentSet + 1);
+      if (isEnteringTiebreak) setTiebreak(true);
+    } else {
+      updateCurrentSet(match.currentSet + 1);
+      setTiebreak(false);
+    }
   };
 
   decrementGameScore = playerNumber => {
@@ -196,7 +218,8 @@ const mapDispatchToProps = dispatch => {
       updateCurrentSet,
       changeServer,
       resetScores,
-      changeFault
+      changeFault,
+      setTiebreak
     },
     dispatch
   );

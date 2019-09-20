@@ -62,19 +62,17 @@ export const resetScores = () => ({
   type: ACTIONS.RESET_SCORES
 });
 
+// Increment the score within the set after a game ends
+// This includes updating to new set or tiebreak depending on the situation
 export const updateSetAfterGameEnd = (
   playerNumber,
   currentSet,
-  setScore,
-  newSetNumber,
-  isTieBreak
+  setScore
 ) => dispatch => {
   dispatch(updateGameScore(1, "0"));
   dispatch(updateGameScore(2, "0"));
   dispatch(updateSetScore(playerNumber, currentSet - 1, setScore.toString()));
   dispatch(changeServer());
-  if (currentSet != newSetNumber) dispatch(updateCurrentSet(newSetNumber));
-  dispatch(setTiebreak(isTieBreak));
 };
 
 export const changeServer = () => ({
