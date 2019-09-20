@@ -12,7 +12,7 @@ const initialState = {
   scores2: ["0", "0", "0"],
   isPlayer1Serving: true,
   isTiebreak: false,
-  isFault: true
+  isFault: false
 };
 
 const matchReducer = (state = initialState, action) => {
