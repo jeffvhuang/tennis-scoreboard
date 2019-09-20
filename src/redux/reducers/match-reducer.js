@@ -11,7 +11,8 @@ const initialState = {
   scores1: ["0", "0", "0"],
   scores2: ["0", "0", "0"],
   isPlayer1Serving: true,
-  isTiebreak: false
+  isTiebreak: false,
+  isFault: true
 };
 
 const matchReducer = (state = initialState, action) => {
@@ -42,6 +43,8 @@ const matchReducer = (state = initialState, action) => {
       return merge(state, { isPlayer1Serving: !state.isPlayer1Serving });
     case A.SET_TIEBREAK:
       return merge(state, { isTiebreak: action.payload });
+    case A.CHANGE_FAULT:
+      return merge(state, { isFault: !state.isFault });
     case A.RESET_SCORES:
       return initialState;
     default:

@@ -11,6 +11,7 @@ const matchActions = [
   "UPDATE_CURRENT_SET",
   "CHANGE_SERVER",
   "SET_TIEBREAK",
+  "CHANGE_FAULT",
   "RESET_SCORES"
 ];
 
@@ -32,6 +33,15 @@ export const updateGameScore = (playerNumber, score) => ({
       : ACTIONS.UPDATE_GAME_SCORE_2,
   payload: score
 });
+
+export const incrementGameScore = (
+  playerNumber,
+  score,
+  isFault
+) => dispatch => {
+  if (isFault) dispatch(changeFault());
+  dispatch(updateGameScore(playerNumber, score));
+};
 
 // setIndex = index in array (eg. If updating first set, setIndex = 0)
 export const updateSetScore = (playerNumber, setIndex, score) => ({
@@ -74,6 +84,10 @@ export const changeServer = () => ({
 export const setTiebreak = isTiebreak => ({
   type: ACTIONS.SET_TIEBREAK,
   payload: isTiebreak
+});
+
+export const changeFault = () => ({
+  type: ACTIONS.CHANGE_FAULT
 });
 
 // async action creator

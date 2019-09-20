@@ -8,11 +8,13 @@ import Btn from "../common/Btn";
 import {
   updatePlayerName,
   updateGameScore,
+  incrementGameScore,
   updateSetScore,
   updateSetAfterGameEnd,
   updateCurrentSet,
   resetScores,
-  changeServer
+  changeServer,
+  changeFault
 } from "../../redux/actions";
 
 class ScoreDisplaySection extends Component {
@@ -31,26 +33,27 @@ class ScoreDisplaySection extends Component {
 
   incrementGameScore = playerNumber => {
     return () => {
-      const { match, updateGameScore } = this.props;
+      const { match, incrementGameScore } = this.props;
       const score = playerNumber == 1 ? match.gameScore1 : match.gameScore2;
       const opponentScore =
         playerNumber == 1 ? match.gameScore2 : match.gameScore1;
 
       switch (score) {
         case "0":
-          updateGameScore(playerNumber, "15");
+          incrementGameScore(playerNumber, "15", match.isFault);
           break;
         case "15":
-          updateGameScore(playerNumber, "30");
+          incrementGameScore(playerNumber, "30", match.isFault);
           break;
         case "30":
-          updateGameScore(playerNumber, "40");
+          incrementGameScore(playerNumber, "40", match.isFault);
           break;
         case "40":
-          if (opponentScore === "40") updateGameScore(playerNumber, "Adv");
+          if (opponentScore === "40")
+            incrementGameScore(playerNumber, "Adv", match.isFault);
           else if (opponentScore == "Adv") {
             const otherPlayer = playerNumber == 1 ? 2 : 1;
-            updateGameScore(otherPlayer, "40");
+            incrementGameScore(otherPlayer, "40", match.isFault);
           } else {
             this.updateSetAfterGameEnd(playerNumber);
           }
@@ -111,13 +114,17 @@ class ScoreDisplaySection extends Component {
   };
 
   fault = () => {
-    this.setState(prevState => ({
-      fault: !prevState.fault
-    }));
+    const { match, changeFault } = this.props;
+    // Incrememnt score for receiving player if double fault
+    if (match.isFault) {
+      const receivingPlayerNum = match.isPlayer1Serving ? 2 : 1;
+      this.incrementGameScore(receivingPlayerNum)();
+    } else changeFault();
   };
 
   render() {
     const { match } = this.props;
+    const faultBtnTitle = match.isFault ? "Double Fault" : "Fault";
     console.log("match", match);
     return (
       <View style={controlStyles.container}>
@@ -162,7 +169,7 @@ class ScoreDisplaySection extends Component {
           <View style={controlStyles.midBox}></View>
           <View style={controlStyles.rightBox}>
             <Btn
-              title="Fault"
+              title={faultBtnTitle}
               onPress={this.fault}
               style={controlStyles.controlBtn}
               textStyle={controlStyles.controlBtnText}
@@ -183,11 +190,13 @@ const mapDispatchToProps = dispatch => {
     {
       updatePlayerName,
       updateGameScore,
+      incrementGameScore,
       updateSetScore,
       updateSetAfterGameEnd,
       updateCurrentSet,
       changeServer,
-      resetScores
+      resetScores,
+      changeFault
     },
     dispatch
   );
