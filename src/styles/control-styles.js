@@ -75,7 +75,7 @@ export const controlStyles = StyleSheet.create({
     paddingRight: moderateScale(10)
   },
   controlBtn: {
-    width: "50%",
+    width: scale(80),
     height: "70%",
     backgroundColor: colours.red,
     borderRadius: 10,
