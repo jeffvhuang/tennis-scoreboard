@@ -10,8 +10,7 @@ import PlayerScoreEditRow from "./PlayerScoreEditRow";
 import {
   updatePlayerName,
   updateGameScore,
-  updateSetScore,
-  resetScores
+  updateSetScore
 } from "../../redux/actions/match-actions";
 
 class ScoreDisplaySection extends Component {
@@ -23,10 +22,6 @@ class ScoreDisplaySection extends Component {
       isEditing: false
     };
   }
-
-  // componentDidMount() {
-  //   this.props.resetScores();
-  // }
 
   onNameChange1 = player1 => this.props.updatePlayerName(1, player1);
   onNameChange2 = player2 => this.props.updatePlayerName(2, player2);
@@ -104,7 +99,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
-    { updatePlayerName, updateGameScore, updateSetScore, resetScores },
+    { updatePlayerName, updateGameScore, updateSetScore },
     dispatch
   );
 };
