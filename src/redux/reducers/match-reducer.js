@@ -1,4 +1,4 @@
-import { ACTIONS as A } from "../actions";
+import { ACTIONS as A } from "../actions/match-actions";
 
 const merge = (prev, next) => Object.assign({}, prev, next);
 
@@ -6,12 +6,12 @@ const initialState = {
   player1: "Player 1",
   player2: "Player 2",
   gameScore1: "0",
-  gameScore2: "40",
-  scores1: ["4", "4", ""],
-  scores2: ["6", "5", ""],
+  gameScore2: "0",
+  scores1: ["0", "0", ""],
+  scores2: ["0", "0", ""],
   player1SetsWon: 0,
   player2SetsWon: 1,
-  currentSet: 2,
+  currentSet: 1,
   isPlayer1Serving: true,
   isTiebreak: false,
   isFault: false,

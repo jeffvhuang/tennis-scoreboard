@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import NewMatchModal from "./NewMatchModal";
 import { styles } from "../../styles/styles";
-import { updatePlayerName } from "../../redux/actions";
+import { updatePlayerName } from "../../redux/actions/match-actions";
 
 class HomeScreen extends Component {
   static navigationOptions = {

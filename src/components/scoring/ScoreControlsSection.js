@@ -17,7 +17,7 @@ import {
   changeFault,
   setTiebreak,
   setWinner
-} from "../../redux/actions";
+} from "../../redux/actions/match-actions";
 
 class ScoreDisplaySection extends Component {
   constructor(props) {
@@ -30,50 +30,58 @@ class ScoreDisplaySection extends Component {
 
   componentDidMount() {
     // this.props.updateCurrentSet(1);
-    this.props.resetScores();
+    // this.props.resetScores();
   }
 
   incrementGameScore = playerNum => {
     return () => {
       const { match, changeGameScore } = this.props;
-      const score = playerNum == 1 ? match.gameScore1 : match.gameScore2;
-      const opponentScore =
-        playerNum == 1 ? match.gameScore2 : match.gameScore1;
 
-      if (!match.isTiebreak) {
-        switch (score) {
-          case "0":
-            changeGameScore(playerNum, "15", match.isFault);
-            break;
-          case "15":
-            changeGameScore(playerNum, "30", match.isFault);
-            break;
-          case "30":
-            changeGameScore(playerNum, "40", match.isFault);
-            break;
-          case "40":
-            if (opponentScore === "40")
-              changeGameScore(playerNum, "Adv", match.isFault);
-            else if (opponentScore == "Adv") {
-              const otherPlayer = playerNum == 1 ? 2 : 1;
-              changeGameScore(otherPlayer, "40", match.isFault);
-            } else {
-              this.updateSetAfterGameEnd(playerNum);
-            }
-            break;
-          case "Adv":
-            if (opponentScore != "Adv") this.updateSetAfterGameEnd(playerNum);
-            break;
+      // Only able to incremement scores when game has no winner yet
+      if (match.winner < 1) {
+        const score = playerNum == 1 ? match.gameScore1 : match.gameScore2;
+        const opponentScore =
+          playerNum == 1 ? match.gameScore2 : match.gameScore1;
+
+        if (!match.isTiebreak) {
+          switch (score) {
+            case "0":
+              changeGameScore(playerNum, "15", match.isFault);
+              break;
+            case "15":
+              changeGameScore(playerNum, "30", match.isFault);
+              break;
+            case "30":
+              changeGameScore(playerNum, "40", match.isFault);
+              break;
+            case "40":
+              if (opponentScore === "40")
+                changeGameScore(playerNum, "Adv", match.isFault);
+              else if (opponentScore == "Adv") {
+                const otherPlayer = playerNum == 1 ? 2 : 1;
+                changeGameScore(otherPlayer, "40", match.isFault);
+              } else {
+                this.updateSetAfterGameEnd(playerNum);
+              }
+              break;
+            case "Adv":
+              if (opponentScore != "Adv") this.updateSetAfterGameEnd(playerNum);
+              break;
+          }
+        } else {
+          const playerScoreNum = parseInt(score) + 1;
+          const opponentScoreNum = parseInt(opponentScore);
+          const isTiebreakOver =
+            playerScoreNum > 6 && playerScoreNum - opponentScoreNum > 1;
+
+          if (isTiebreakOver) this.updateSetAfterGameEnd(playerNum);
+          else
+            changeGameScore(
+              playerNum,
+              playerScoreNum.toString(),
+              match.isFault
+            );
         }
-      } else {
-        const playerScoreNum = parseInt(score) + 1;
-        const opponentScoreNum = parseInt(opponentScore);
-        const isTiebreakOver =
-          playerScoreNum > 6 && playerScoreNum - opponentScoreNum > 1;
-
-        if (isTiebreakOver) this.updateSetAfterGameEnd(playerNum);
-        else
-          changeGameScore(playerNum, playerScoreNum.toString(), match.isFault);
       }
     };
   };
@@ -109,7 +117,7 @@ class ScoreDisplaySection extends Component {
 
       if (isSetFinished) {
         updateSetsWon(playerNum, playerSetsWon + 1);
-        console.log(playerSetsWon);
+
         if (playerSetsWon + 1 === match.setsToWin) setWinner(playerNum);
         else updateCurrentSet(match.currentSet + 1);
       } else if (isEnteringTiebreak) {
@@ -129,26 +137,30 @@ class ScoreDisplaySection extends Component {
   decrementGameScore = playerNum => {
     return () => {
       const { match, changeGameScore } = this.props;
-      var score = playerNum == 1 ? match.gameScore1 : match.gameScore2;
 
-      if (!match.isTiebreak) {
-        switch (score) {
-          case "15":
-            changeGameScore(playerNum, "0", match.isFault);
-            break;
-          case "30":
-            changeGameScore(playerNum, "15", match.isFault);
-            break;
-          case "40":
-            changeGameScore(playerNum, "30", match.isFault);
-            break;
-          case "Adv":
-            changeGameScore(playerNum, "40", match.isFault);
-            break;
+      // Only able to decrement score when game has not finished
+      if (match.winner < 1) {
+        var score = playerNum == 1 ? match.gameScore1 : match.gameScore2;
+
+        if (!match.isTiebreak) {
+          switch (score) {
+            case "15":
+              changeGameScore(playerNum, "0", match.isFault);
+              break;
+            case "30":
+              changeGameScore(playerNum, "15", match.isFault);
+              break;
+            case "40":
+              changeGameScore(playerNum, "30", match.isFault);
+              break;
+            case "Adv":
+              changeGameScore(playerNum, "40", match.isFault);
+              break;
+          }
+        } else {
+          const playerScoreNum = score != "0" ? parseInt(score) - 1 : 0;
+          changeGameScore(playerNum, playerScoreNum.toString(), match.isFault);
         }
-      } else {
-        const playerScoreNum = score != "0" ? parseInt(score) - 1 : 0;
-        changeGameScore(playerNum, playerScoreNum.toString(), match.isFault);
       }
     };
   };

@@ -1,4 +1,4 @@
-import { createStringConstants } from "../helpers/constants";
+import { createStringConstants } from "../../helpers/constants";
 
 // action types
 const matchActions = [

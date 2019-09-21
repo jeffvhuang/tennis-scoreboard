@@ -12,7 +12,7 @@ import {
   updateGameScore,
   updateSetScore,
   resetScores
-} from "../../redux/actions";
+} from "../../redux/actions/match-actions";
 
 class ScoreDisplaySection extends Component {
   constructor(props) {
