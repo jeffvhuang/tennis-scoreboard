@@ -16,7 +16,7 @@ const ExploreStack = createStackNavigator(
     Matches: MatchesScreen
   },
   {
-    initialRouteName: "Home",
+    initialRouteName: "Tournaments",
     headerLayoutPreset: "center",
     defaultNavigationOptions: {
       headerStyle: {
@@ -34,8 +34,8 @@ const ExploreStack = createStackNavigator(
 
 const MainTabs = createBottomTabNavigator(
   {
-    Scoring: ScoringScreen,
-    Explore: ExploreStack
+    Explore: ExploreStack,
+    Scoring: ScoringScreen
   },
   {
     tabBarOptions: {
