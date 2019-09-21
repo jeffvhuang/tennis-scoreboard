@@ -1,4 +1,5 @@
 export const apiKey = "";
+export const STORAGE_KEY = "TENNIS_SCOREBOARD";
 
 export const tennisGameScores = [
   {

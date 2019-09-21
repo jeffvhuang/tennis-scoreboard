@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View } from "react-native";
+import { View, AsyncStorage } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -20,10 +20,12 @@ import {
   setTiebreak,
   setWinner
 } from "../../redux/actions/match-actions";
+import { STORAGE_KEY } from "../../helpers/constants";
 
 class ScoreDisplaySection extends Component {
   // componentDidMount() {
-  // this.props.resetScores();
+  //   this.props.resetScores();
+  //   AsyncStorage.setItem(STORAGE_KEY, JSON.stringify([]));
   // }
 
   incrementGameScore = playerNum => {
@@ -167,6 +169,25 @@ class ScoreDisplaySection extends Component {
     } else changeFault();
   };
 
+  // Save the match into the phone's local storage
+  saveMatch = async () => {
+    const response = await AsyncStorage.getItem(STORAGE_KEY);
+    const { match } = this.props;
+    const matchToSave = { ...match, modified: Date.now() };
+    let storedMatches = JSON.parse(response);
+
+    if (storedMatches) {
+      const index = storedMatches.findIndex(x => x.id == match.id);
+      // Remove if it exists (instead of replace to keep in last modified order)
+      if (index != -1) storedMatches.splice(index, 1);
+      storedMatches.push(matchToSave);
+    } else {
+      storedMatches = [matchToSave];
+    }
+
+    AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(storedMatches));
+  };
+
   render() {
     const { match } = this.props;
     const faultBtnTitle = match.isFault ? "Double Fault" : "Fault";
@@ -184,7 +205,11 @@ class ScoreDisplaySection extends Component {
           incrementScore={this.incrementGameScore}
           decrementScore={this.decrementGameScore}
         />
-        <LowerButtonsRow title={faultBtnTitle} faultBtnFn={this.fault} />
+        <LowerButtonsRow
+          title={faultBtnTitle}
+          faultBtnFn={this.fault}
+          saveFn={this.saveMatch}
+        />
       </View>
     );
   }

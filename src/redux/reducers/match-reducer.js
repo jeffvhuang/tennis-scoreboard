@@ -1,14 +1,18 @@
+import uuid from "uuid";
 import { ACTIONS as A } from "../actions/match-actions";
 
 const merge = (prev, next) => Object.assign({}, prev, next);
 
 const initialState = {
+  id: uuid.v1(),
+  created: Date.now(),
+  modified: null,
   player1: "Player 1",
   player2: "Player 2",
   gameScore1: "0",
   gameScore2: "0",
-  scores1: ["0", "0", ""],
-  scores2: ["0", "0", ""],
+  scores1: ["0", "0", "0"],
+  scores2: ["0", "0", "0"],
   player1SetsWon: 0,
   player2SetsWon: 1,
   currentSet: 1,
