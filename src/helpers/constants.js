@@ -1,3 +1,5 @@
+export const apiKey = "";
+
 export const tennisGameScores = [
   {
     key: "0",
