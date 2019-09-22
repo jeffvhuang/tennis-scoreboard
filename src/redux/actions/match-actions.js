@@ -11,6 +11,7 @@ const matchActions = [
   "UPDATE_SETS_WON_1",
   "UPDATE_SETS_WON_2",
   "UPDATE_CURRENT_SET",
+  "START_NEW_SET",
   "CHANGE_SERVER",
   "SET_TIEBREAK",
   "SET_WINNER",
@@ -72,6 +73,10 @@ export const updateSetAfterGameEnd = (
 export const updateCurrentSet = number => ({
   type: ACTIONS.UPDATE_CURRENT_SET,
   payload: number
+});
+
+export const startNewSet = () => ({
+  type: ACTIONS.START_NEW_SET
 });
 
 export const changeFault = () => ({

@@ -17,7 +17,7 @@ const ScoringStack = createStackNavigator(
     Scoreboard: ScoringScreen
   },
   {
-    initialRouteName: "SavedMatches",
+    initialRouteName: "Scoreboard",
     headerLayoutPreset: "center",
     defaultNavigationOptions: {
       headerStyle: {

@@ -62,7 +62,7 @@ const PlayerScoreEditRow = ({
         <TextInput
           keyboardType="numeric"
           onChangeText={onScoreChange(1)}
-          value={setScores.length > 1 && setScores[1]}
+          value={setScores.length > 1 ? setScores[1] : ""}
           style={[scoreStyles.score, scoreStyles.input]}
         />
       </View>
@@ -70,7 +70,7 @@ const PlayerScoreEditRow = ({
         <TextInput
           keyboardType="numeric"
           onChangeText={onScoreChange(2)}
-          value={setScores.length > 2 && setScores[2]}
+          value={setScores.length > 2 ? setScores[2] : ""}
           style={[scoreStyles.score, scoreStyles.input]}
         />
       </View>

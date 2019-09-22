@@ -1,16 +1,16 @@
 import React, { Component } from "react";
-import { View, AsyncStorage } from "react-native";
+import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import { controlStyles } from "../../../styles/control-styles";
-import { STORAGE_KEY, saveMatchToStorage } from "../../../helpers/constants";
+import { saveMatchToStorage } from "../../../helpers/constants";
 import {
   updatePlayerName,
   changeGameScore,
   updateSetScore,
   updateSetAfterGameEnd,
-  updateCurrentSet,
+  startNewSet,
   updateSetsWon,
   resetScores,
   changeServer,
@@ -23,10 +23,9 @@ import ControlsNameRow from "./ControlsNameRow";
 import LowerButtonsRow from "./LowerButtonsRow";
 
 class ScoreDisplaySection extends Component {
-  // componentDidMount() {
-  //   this.props.resetScores();
-  //   AsyncStorage.setItem(STORAGE_KEY, JSON.stringify([]));
-  // }
+  componentDidMount() {
+    this.props.resetScores();
+  }
 
   incrementGameScore = playerNum => {
     return () => {
@@ -82,7 +81,7 @@ class ScoreDisplaySection extends Component {
   };
 
   updateSetAfterGameEnd = playerNum => {
-    const { match, updateCurrentSet, updateSetsWon, setWinner } = this.props;
+    const { match, startNewSet, updateSetsWon, setWinner } = this.props;
     const setIndex = match.currentSet - 1;
     let playerSetScore =
       playerNum == 1 ? match.scores1[setIndex] : match.scores2[setIndex];
@@ -114,7 +113,7 @@ class ScoreDisplaySection extends Component {
         updateSetsWon(playerNum, playerSetsWon + 1);
 
         if (playerSetsWon + 1 === match.setsToWin) setWinner(playerNum);
-        else updateCurrentSet(match.currentSet + 1);
+        else startNewSet();
       } else if (isEnteringTiebreak) {
         this.props.setTiebreak(true);
       }
@@ -123,7 +122,7 @@ class ScoreDisplaySection extends Component {
 
       if (playerSetsWon + 1 === match.setsToWin) setWinner(playerNum);
       else {
-        updateCurrentSet(match.currentSet + 1);
+        startNewSet();
         this.props.setTiebreak(false);
       }
     }
@@ -174,7 +173,7 @@ class ScoreDisplaySection extends Component {
   render() {
     const { match } = this.props;
     const faultBtnTitle = match.isFault ? "Double Fault" : "Fault";
-
+    console.log(match);
     return (
       <View style={controlStyles.container}>
         <ControlsNameRow
@@ -209,7 +208,7 @@ const mapDispatchToProps = dispatch => {
       changeGameScore,
       updateSetScore,
       updateSetAfterGameEnd,
-      updateCurrentSet,
+      startNewSet,
       changeServer,
       resetScores,
       changeFault,
