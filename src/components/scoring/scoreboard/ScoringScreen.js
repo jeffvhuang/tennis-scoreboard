@@ -8,7 +8,7 @@ import ScoreControlsSection from "./ScoreControlsSection";
 class ScoringScreen extends Component {
   render() {
     return (
-      <SafeAreaView style={styles.androidSafeArea}>
+      <SafeAreaView style={styles.container}>
         <ScoreDisplaySection />
         <ScoreControlsSection />
       </SafeAreaView>

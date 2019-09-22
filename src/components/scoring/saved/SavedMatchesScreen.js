@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { View, Text, FlatList, AsyncStorage, SafeAreaView } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  AsyncStorage,
+  SafeAreaView,
+  Alert
+} from "react-native";
 import { STORAGE_KEY } from "../../../helpers/constants";
 import { styles } from "../../../styles/styles";
 import ItemRow from "./ItemRow";
@@ -13,8 +20,27 @@ const DATA = [
 ];
 
 class SavedMatchesScreen extends Component {
+  static navigationOptions = {
+    title: "Load Matches"
+  };
+
+  state = {
+    matches: []
+  };
+
   componentDidMount() {
-    AsyncStorage.getItem(STORAGE_KEY);
+    this.getMatches();
+  }
+
+  async getMatches() {
+    try {
+      const matches = await AsyncStorage.getItem(STORAGE_KEY);
+      this.setState({ matches });
+    } catch (e) {
+      Alert.alert("Error", "Unable to get saved data from phone storage", [
+        { text: "OK", onPress: () => {} }
+      ]);
+    }
   }
 
   goToMatch = id => () => {
@@ -22,15 +48,12 @@ class SavedMatchesScreen extends Component {
   };
 
   renderListItem = ({ item }) => {
-    return <ItemRow text={item.title} buttonFn={goToMatch(item.id)} />;
+    return <ItemRow text={item.title} buttonFn={this.goToMatch(item.id)} />;
   };
 
   render() {
     return (
-      <SafeAreaView style={styles.androidSafeArea}>
-        <View style={exploreStyles.container}>
-          <Text>Matches</Text>
-        </View>
+      <SafeAreaView style={styles.container}>
         <FlatList
           data={DATA}
           renderItem={this.renderListItem}

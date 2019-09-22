@@ -22,7 +22,7 @@ class TournamentsScreen extends Component {
   };
 
   renderListItem = ({ item }) => {
-    return <ItemRow text={item.title} buttonFn={goToMatch(item.id)} />;
+    return <ItemRow text={item.title} buttonFn={this.goToMatch(item.id)} />;
   };
 
   render() {

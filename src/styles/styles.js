@@ -10,6 +10,7 @@ export const colours = {
 };
 
 export const styles = StyleSheet.create({
+  // For screens not in a stack
   androidSafeArea: {
     flex: 1,
     backgroundColor: "navy",

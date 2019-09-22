@@ -16,9 +16,9 @@ class HomeScreen extends Component {
   };
 
   showModal = () => this.setState({ modalVisible: true });
-
   closeModal = () => this.setState({ modalVisible: false });
 
+  goToSavedMatches = () => this.props.navigation.navigate("SavedMatches");
   goToTournaments = () => this.props.navigation.navigate("Tournaments");
 
   goToScoring = (player1, player2) => {
@@ -39,7 +39,7 @@ class HomeScreen extends Component {
         <View style={styles.midRow}>
           <TouchableHighlight
             style={styles.homeBtn}
-            onPress={this.goToTournaments}
+            onPress={this.goToSavedMatches}
           >
             <Text style={styles.btnText}>Saved Matches</Text>
           </TouchableHighlight>

@@ -4,7 +4,7 @@ import {
   createBottomTabNavigator
 } from "react-navigation";
 import HomeScreen from "../components/scoring/home/HomeScreen";
-import SavedMatchesScreen from "../components/scoring/home/HomeScreen";
+import SavedMatchesScreen from "../components/scoring/saved/SavedMatchesScreen";
 import ScoringScreen from "../components/scoring/scoreboard/ScoringScreen";
 import TournamentsScreen from "../components/explore/TournamentsScreen";
 import MatchesScreen from "../components/explore/MatchesScreen";
