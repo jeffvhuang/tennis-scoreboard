@@ -7,17 +7,13 @@ import {
   SafeAreaView,
   Alert
 } from "react-native";
-import { STORAGE_KEY } from "../../../helpers/constants";
+import {
+  STORAGE_KEY,
+  getDateStringFromTimestamp
+} from "../../../helpers/constants";
 import { styles } from "../../../styles/styles";
 import ItemRow from "./ItemRow";
 import { exploreStyles } from "../../../styles/explore-styles";
-
-const DATA = [
-  {
-    id: "ss",
-    title: "US Open 2019"
-  }
-];
 
 class SavedMatchesScreen extends Component {
   static navigationOptions = {
@@ -34,28 +30,40 @@ class SavedMatchesScreen extends Component {
 
   async getMatches() {
     try {
-      const matches = await AsyncStorage.getItem(STORAGE_KEY);
+      const response = await AsyncStorage.getItem(STORAGE_KEY);
+      const matches = JSON.parse(response);
       this.setState({ matches });
     } catch (e) {
       Alert.alert("Error", "Unable to get saved data from phone storage", [
-        { text: "OK", onPress: () => {} }
+        { text: "OK" }
       ]);
     }
   }
 
   goToMatch = id => () => {
-    this.props.navigation.navigate("Scoreboard", id);
+    console.log(id);
+    // this.props.navigation.navigate("Scoreboard", id);
   };
 
   renderListItem = ({ item }) => {
-    return <ItemRow text={item.title} buttonFn={this.goToMatch(item.id)} />;
+    const date = getDateStringFromTimestamp(item.modified);
+    let score = "";
+    for (let i = 0; i < item.scores1.length; i++) {
+      if (score.length) score += ", ";
+      score += `${item.scores1[i]} - ${item.scores2[i]}`;
+    }
+    const title = `${date}: ${item.player1} v ${item.player2} (${score})`;
+    return (
+      <ItemRow key={item.id} text={title} buttonFn={this.goToMatch(item.id)} />
+    );
   };
 
   render() {
+    console.log(this.state.matches);
     return (
       <SafeAreaView style={styles.container}>
         <FlatList
-          data={DATA}
+          data={this.state.matches}
           renderItem={this.renderListItem}
           keyExtractor={item => item.id}
         />

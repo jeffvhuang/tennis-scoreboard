@@ -29,6 +29,43 @@ export const tennisGameScores = [
   }
 ];
 
+const monthNames = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December"
+];
+
+const monthTriNames = [
+  "JAN",
+  "FEB",
+  "MAR",
+  "APR",
+  "MAY",
+  "JUN",
+  "JUL",
+  "AUG",
+  "SEP",
+  "OCT",
+  "NOV",
+  "DEC"
+];
+
+export function getDateStringFromTimestamp(timestamp) {
+  if (!timestamp) return "";
+  const date = new Date(timestamp);
+  const month = monthTriNames[date.getMonth()];
+  return `${date.getDate()} ${month} ${date.getFullYear()}`;
+}
+
 // REDUX FUNCTIONS =======================
 /* Create object of actions for redux in format:
 {
