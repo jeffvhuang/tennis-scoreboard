@@ -15,9 +15,9 @@ function LowerButtonsRow({ title, faultBtnFn, saveFn }) {
     <View style={controlStyles.buttonsRow}>
       <View style={controlStyles.leftBox}>
         <Btn
-          title="Save Match"
+          title="Save"
           onPress={saveFn}
-          style={controlStyles.controlBtn}
+          style={controlStyles.saveBtn}
           textStyle={controlStyles.controlBtnText}
         />
       </View>

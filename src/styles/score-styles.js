@@ -2,6 +2,8 @@ import { StyleSheet } from "react-native";
 import { scale, moderateScale, verticalScale } from "../helpers/scaling";
 import { colours } from "./styles";
 
+const fontSize = 20;
+
 export const scoreStyles = StyleSheet.create({
   container: {
     flex: 1,
@@ -32,10 +34,10 @@ export const scoreStyles = StyleSheet.create({
     textAlign: "left",
     justifyContent: "center",
     color: "blue",
-    fontSize: moderateScale(14)
+    fontSize: moderateScale(10)
   },
   scoreHeader: {
-    fontSize: moderateScale(14)
+    fontSize: moderateScale(10)
   },
   playerRow: {
     flex: 1,
@@ -68,16 +70,16 @@ export const scoreStyles = StyleSheet.create({
     backgroundColor: colours.grey
   },
   modalScore: {
-    fontSize: moderateScale(26),
+    fontSize: moderateScale(fontSize),
     textAlign: "center"
   },
   score: {
-    fontSize: moderateScale(26),
+    fontSize: moderateScale(fontSize),
     width: "95%",
     textAlign: "center"
   },
   playerName: {
-    fontSize: moderateScale(26),
+    fontSize: moderateScale(fontSize),
     flex: 8,
     textAlign: "left"
   },
@@ -88,10 +90,10 @@ export const scoreStyles = StyleSheet.create({
     width: "90%",
     height: "90%",
     backgroundColor: colours.grey,
-    fontSize: moderateScale(26)
+    fontSize: moderateScale(fontSize)
   },
   gameDropdownItem: {
-    fontSize: moderateScale(26)
+    fontSize: moderateScale(fontSize)
   },
   tennisBall: {
     flex: 1,

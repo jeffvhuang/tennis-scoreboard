@@ -63,7 +63,8 @@ export const controlStyles = StyleSheet.create({
     flexDirection: "row"
   },
   leftBox: {
-    flex: 1
+    flex: 1,
+    paddingLeft: scale(10)
   },
   midBox: {
     flex: 1
@@ -72,7 +73,15 @@ export const controlStyles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "flex-end",
-    paddingRight: moderateScale(10)
+    paddingRight: scale(10)
+  },
+  saveBtn: {
+    width: scale(40),
+    height: "70%",
+    backgroundColor: "black",
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center"
   },
   controlBtn: {
     width: scale(80),
@@ -83,7 +92,7 @@ export const controlStyles = StyleSheet.create({
     alignItems: "center"
   },
   controlBtnText: {
-    fontSize: moderateScale(16),
+    fontSize: moderateScale(14),
     color: colours.white
   }
 });

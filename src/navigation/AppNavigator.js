@@ -64,13 +64,13 @@ const MainTabs = createBottomTabNavigator(
       activeBackgroundColor: "royalblue",
       style: {
         backgroundColor: "white",
-        height: 50
+        height: 40
       },
       tabStyle: {
         justifyContent: "center"
       },
       labelStyle: {
-        fontSize: 24,
+        fontSize: 18,
         height: "100%",
         textAlignVertical: "center"
       }
