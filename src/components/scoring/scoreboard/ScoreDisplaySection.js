@@ -18,7 +18,6 @@ class ScoreDisplaySection extends Component {
     super(props);
 
     this.state = {
-      currentSet: 1,
       isEditing: false
     };
   }

@@ -24,6 +24,8 @@ const initialState = {
 };
 
 const matchReducer = (state = initialState, action) => {
+  console.log("reducer actions", action);
+  console.log(A.CREATE_NEW_MATCH);
   switch (action.type) {
     case A.UPDATE_PLAYER_1_NAME:
       return merge(state, { player1: action.payload });
@@ -67,12 +69,16 @@ const matchReducer = (state = initialState, action) => {
 
     case A.LOAD_MATCH:
       return action.payload;
-    case A.RESET_SCORES:
+    case A.CREATE_NEW_MATCH:
       const date = Date.now();
+      const player1 = action.payload[0] ? action.payload[0] : "Player 1";
+      const player2 = action.payload[1] ? action.payload[1] : "Player 2";
       return merge(initialState, {
         id: uuid.v1(),
         created: date,
-        modified: date
+        modified: date,
+        player1,
+        player2
       });
     default:
       return state;

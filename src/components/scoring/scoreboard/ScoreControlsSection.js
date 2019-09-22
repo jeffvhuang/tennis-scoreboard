@@ -12,7 +12,6 @@ import {
   updateSetAfterGameEnd,
   startNewSet,
   updateSetsWon,
-  resetScores,
   changeServer,
   changeFault,
   setTiebreak,
@@ -22,11 +21,7 @@ import GameButtonsRow from "./GameButtonsRow";
 import ControlsNameRow from "./ControlsNameRow";
 import LowerButtonsRow from "./LowerButtonsRow";
 
-class ScoreDisplaySection extends Component {
-  componentDidMount() {
-    this.props.resetScores();
-  }
-
+class ScoreControlsSection extends Component {
   incrementGameScore = playerNum => {
     return () => {
       const { match, changeGameScore } = this.props;
@@ -210,7 +205,6 @@ const mapDispatchToProps = dispatch => {
       updateSetAfterGameEnd,
       startNewSet,
       changeServer,
-      resetScores,
       changeFault,
       setTiebreak,
       setWinner,
@@ -223,4 +217,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ScoreDisplaySection);
+)(ScoreControlsSection);

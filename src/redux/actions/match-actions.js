@@ -16,7 +16,7 @@ const matchActions = [
   "SET_TIEBREAK",
   "SET_WINNER",
   "CHANGE_FAULT",
-  "RESET_SCORES",
+  "CREATE_NEW_MATCH",
   "LOAD_MATCH"
 ];
 
@@ -97,9 +97,17 @@ export const setWinner = playerNum => ({
   payload: playerNum
 });
 
-export const resetScores = () => ({
-  type: ACTIONS.RESET_SCORES
-});
+// export const createNewMatch = (player1, player2) => ({
+//   type: ACTIONS.CREATE_NEW_MATCH,
+//   payload: [player1, player2]
+// });
+
+export const createNewMatch = (player1, player2) => {
+  return {
+    type: ACTIONS.CREATE_NEW_MATCH,
+    payload: [player1, player2]
+  };
+};
 
 export const loadMatch = match => ({
   type: ACTIONS.LOAD_MATCH,
