@@ -15,7 +15,8 @@ const matchActions = [
   "SET_TIEBREAK",
   "SET_WINNER",
   "CHANGE_FAULT",
-  "RESET_SCORES"
+  "RESET_SCORES",
+  "LOAD_MATCH"
 ];
 
 export const ACTIONS = createStringConstants(...matchActions);
@@ -93,4 +94,9 @@ export const setWinner = playerNum => ({
 
 export const resetScores = () => ({
   type: ACTIONS.RESET_SCORES
+});
+
+export const loadMatch = match => ({
+  type: ACTIONS.LOAD_MATCH,
+  payload: match
 });

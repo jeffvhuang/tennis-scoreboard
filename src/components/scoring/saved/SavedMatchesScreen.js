@@ -1,15 +1,12 @@
 import React, { Component } from "react";
-import {
-  View,
-  Text,
-  FlatList,
-  AsyncStorage,
-  SafeAreaView,
-  Alert
-} from "react-native";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { FlatList, AsyncStorage, SafeAreaView, Alert } from "react-native";
+import { loadMatch } from "../../../redux/actions/match-actions";
 import {
   STORAGE_KEY,
-  getDateStringFromTimestamp
+  getDateStringFromTimestamp,
+  saveMatchToStorage
 } from "../../../helpers/constants";
 import { styles } from "../../../styles/styles";
 import ItemRow from "./ItemRow";
@@ -40,9 +37,13 @@ class SavedMatchesScreen extends Component {
     }
   }
 
-  goToMatch = id => () => {
-    console.log(id);
-    // this.props.navigation.navigate("Scoreboard", id);
+  goToMatch = id => async () => {
+    const { match, navigation, loadMatch } = this.props;
+    // Save the current match if it exists before overriding
+    if (match.id) await saveMatchToStorage(match);
+    const selected = this.state.matches.find(x => x.id == id);
+    loadMatch(selected);
+    navigation.navigate("Scoreboard");
   };
 
   renderListItem = ({ item }) => {
@@ -66,7 +67,6 @@ class SavedMatchesScreen extends Component {
   };
 
   render() {
-    console.log(this.state.matches);
     return (
       <SafeAreaView style={styles.container}>
         <FlatList
@@ -80,4 +80,15 @@ class SavedMatchesScreen extends Component {
   }
 }
 
-export default SavedMatchesScreen;
+const mapStateToProps = state => ({
+  match: state.match
+});
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ loadMatch }, dispatch);
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SavedMatchesScreen);

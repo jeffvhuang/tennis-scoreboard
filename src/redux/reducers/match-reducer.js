@@ -4,8 +4,8 @@ import { ACTIONS as A } from "../actions/match-actions";
 const merge = (prev, next) => Object.assign({}, prev, next);
 
 const initialState = {
-  id: uuid.v1(),
-  created: Date.now(),
+  id: "",
+  created: null,
   modified: null,
   player1: "Player 1",
   player2: "Player 2",
@@ -60,8 +60,15 @@ const matchReducer = (state = initialState, action) => {
     case A.SET_WINNER:
       return merge(state, { winner: action.payload });
 
+    case A.LOAD_MATCH:
+      return action.payload;
     case A.RESET_SCORES:
-      return initialState;
+      const date = Date.now();
+      return merge(initialState, {
+        id: uuid.v1(),
+        created: date,
+        modified: date
+      });
     default:
       return state;
   }

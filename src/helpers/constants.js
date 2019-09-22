@@ -1,3 +1,5 @@
+import { AsyncStorage } from "react-native";
+
 export const apiKey = "";
 export const STORAGE_KEY = "TENNIS_SCOREBOARD";
 
@@ -64,6 +66,24 @@ export function getDateStringFromTimestamp(timestamp) {
   const date = new Date(timestamp);
   const month = monthTriNames[date.getMonth()];
   return `${date.getDate()} ${month} ${date.getFullYear()}`;
+}
+
+// Save the match into the phone's local storage
+export async function saveMatchToStorage(match) {
+  const response = await AsyncStorage.getItem(STORAGE_KEY);
+  const matchToSave = { ...match, modified: Date.now() };
+  let storedMatches = JSON.parse(response);
+
+  if (storedMatches) {
+    const index = storedMatches.findIndex(x => x.id == match.id);
+    // Remove if it exists (instead of replace to keep in last modified order)
+    if (index != -1) storedMatches.splice(index, 1);
+    storedMatches.push(matchToSave);
+  } else {
+    storedMatches = [matchToSave];
+  }
+
+  AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(storedMatches));
 }
 
 // REDUX FUNCTIONS =======================

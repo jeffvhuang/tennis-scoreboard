@@ -4,9 +4,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import { controlStyles } from "../../../styles/control-styles";
-import GameButtonsRow from "./GameButtonsRow";
-import ControlsNameRow from "./ControlsNameRow";
-import LowerButtonsRow from "./LowerButtonsRow";
+import { STORAGE_KEY, saveMatchToStorage } from "../../../helpers/constants";
 import {
   updatePlayerName,
   changeGameScore,
@@ -20,7 +18,9 @@ import {
   setTiebreak,
   setWinner
 } from "../../../redux/actions/match-actions";
-import { STORAGE_KEY } from "../../../helpers/constants";
+import GameButtonsRow from "./GameButtonsRow";
+import ControlsNameRow from "./ControlsNameRow";
+import LowerButtonsRow from "./LowerButtonsRow";
 
 class ScoreDisplaySection extends Component {
   // componentDidMount() {
@@ -169,24 +169,7 @@ class ScoreDisplaySection extends Component {
     } else changeFault();
   };
 
-  // Save the match into the phone's local storage
-  saveMatch = async () => {
-    const response = await AsyncStorage.getItem(STORAGE_KEY);
-    const { match } = this.props;
-    const matchToSave = { ...match, modified: Date.now() };
-    let storedMatches = JSON.parse(response);
-
-    if (storedMatches) {
-      const index = storedMatches.findIndex(x => x.id == match.id);
-      // Remove if it exists (instead of replace to keep in last modified order)
-      if (index != -1) storedMatches.splice(index, 1);
-      storedMatches.push(matchToSave);
-    } else {
-      storedMatches = [matchToSave];
-    }
-
-    AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(storedMatches));
-  };
+  saveMatch = () => saveMatchToStorage(this.props.match);
 
   render() {
     const { match } = this.props;
