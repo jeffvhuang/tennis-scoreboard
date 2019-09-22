@@ -7,8 +7,5 @@ export const exploreStyles = StyleSheet.create({
     width: "100%",
     flex: 2,
     backgroundColor: colours.white
-  },
-  buttonsRow: {},
-  touchable: {},
-  rowText: {}
+  }
 });

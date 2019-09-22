@@ -1,20 +1,24 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { View, TouchableHighlight, Text } from "react-native";
-import { exploreStyles } from "../../../styles/explore-styles";
+import { scoreStyles } from "../../../styles/score-styles";
 
 ItemRow.propTypes = {
-  text: PropTypes.string.isRequired,
-  buttonFn: PropTypes.func.isRequired
+  buttonFn: PropTypes.func.isRequired,
+  text1: PropTypes.string,
+  text2: PropTypes.string,
+  text3: PropTypes.string
 };
 
-function ItemRow({ text, buttonFn }) {
+function ItemRow({ buttonFn, text1, text2, text3 }) {
   return (
-    <View style={exploreStyles.buttonsRow}>
-      <TouchableHighlight style={exploreStyles.touchable} onPress={buttonFn}>
-        <Text style={exploreStyles.rowText}>{text}</Text>
-      </TouchableHighlight>
-    </View>
+    <TouchableHighlight style={scoreStyles.touchable} onPress={buttonFn}>
+      <View style={scoreStyles.touchableView}>
+        <Text style={[scoreStyles.itemText, { flex: 2 }]}>{text1}</Text>
+        <Text style={[scoreStyles.itemText, { flex: 4 }]}>{text2}</Text>
+        <Text style={[scoreStyles.itemText, { flex: 3 }]}>{text3}</Text>
+      </View>
+    </TouchableHighlight>
   );
 }
 

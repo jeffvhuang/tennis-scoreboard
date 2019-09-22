@@ -97,5 +97,30 @@ export const scoreStyles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center"
+  },
+  listView: {
+    flex: 1,
+    width: "100%"
+  },
+  buttonsRow: {
+    width: "100%",
+    height: "100%"
+  },
+  touchable: {
+    width: "100%",
+    paddingTop: scale(5),
+    paddingBottom: scale(5),
+    paddingLeft: "3%",
+    paddingRight: "3%",
+    borderBottomWidth: 1
+  },
+  touchableView: {
+    height: "100%",
+    flexDirection: "row",
+    flex: 1,
+    alignItems: "center"
+  },
+  itemText: {
+    fontSize: moderateScale(14)
   }
 });

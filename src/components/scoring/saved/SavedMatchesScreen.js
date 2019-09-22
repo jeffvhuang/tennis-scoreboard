@@ -13,11 +13,11 @@ import {
 } from "../../../helpers/constants";
 import { styles } from "../../../styles/styles";
 import ItemRow from "./ItemRow";
-import { exploreStyles } from "../../../styles/explore-styles";
+import { scoreStyles } from "../../../styles/score-styles";
 
 class SavedMatchesScreen extends Component {
   static navigationOptions = {
-    title: "Load Matches"
+    title: "Saved Matches"
   };
 
   state = {
@@ -52,9 +52,16 @@ class SavedMatchesScreen extends Component {
       if (score.length) score += ", ";
       score += `${item.scores1[i]} - ${item.scores2[i]}`;
     }
-    const title = `${date}: ${item.player1} v ${item.player2} (${score})`;
+    score += "";
+    const matchName = `${item.player1} v ${item.player2}`;
     return (
-      <ItemRow key={item.id} text={title} buttonFn={this.goToMatch(item.id)} />
+      <ItemRow
+        key={item.id}
+        buttonFn={this.goToMatch(item.id)}
+        text1={date}
+        text2={matchName}
+        text3={score}
+      />
     );
   };
 
@@ -66,6 +73,7 @@ class SavedMatchesScreen extends Component {
           data={this.state.matches}
           renderItem={this.renderListItem}
           keyExtractor={item => item.id}
+          style={scoreStyles.listView}
         />
       </SafeAreaView>
     );
