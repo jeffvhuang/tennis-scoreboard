@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text } from "react-native";
 import PropTypes from "prop-types";
-import { controlStyles } from "../../styles/control-styles";
+import { controlStyles } from "../../../styles/control-styles";
 
 ControlsTextView.propTypes = {
   text: PropTypes.string.isRequired

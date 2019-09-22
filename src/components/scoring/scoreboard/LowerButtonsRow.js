@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { View } from "react-native";
-import Btn from "../common/Btn";
-import { controlStyles } from "../../styles/control-styles";
+import Btn from "../../common/Btn";
+import { controlStyles } from "../../../styles/control-styles";
 
 LowerButtonsRow.propTypes = {
   title: PropTypes.string.isRequired,

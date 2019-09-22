@@ -3,7 +3,7 @@ import { View, AsyncStorage } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import { controlStyles } from "../../styles/control-styles";
+import { controlStyles } from "../../../styles/control-styles";
 import GameButtonsRow from "./GameButtonsRow";
 import ControlsNameRow from "./ControlsNameRow";
 import LowerButtonsRow from "./LowerButtonsRow";
@@ -19,8 +19,8 @@ import {
   changeFault,
   setTiebreak,
   setWinner
-} from "../../redux/actions/match-actions";
-import { STORAGE_KEY } from "../../helpers/constants";
+} from "../../../redux/actions/match-actions";
+import { STORAGE_KEY } from "../../../helpers/constants";
 
 class ScoreDisplaySection extends Component {
   // componentDidMount() {

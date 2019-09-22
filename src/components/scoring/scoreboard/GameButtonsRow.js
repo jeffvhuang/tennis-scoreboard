@@ -1,8 +1,8 @@
 import React from "react";
 import { View } from "react-native";
 import PropTypes from "prop-types";
-import Btn from "../common/Btn";
-import { controlStyles } from "../../styles/control-styles";
+import Btn from "../../common/Btn";
+import { controlStyles } from "../../../styles/control-styles";
 
 const propTypes = {
   score1: PropTypes.string.isRequired,

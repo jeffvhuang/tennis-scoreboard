@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import { scoreStyles } from "../../styles/score-styles";
+import { scoreStyles } from "../../../styles/score-styles";
 import ScoreTableHeader from "./ScoreTableHeader";
 import PlayerScoreRow from "./PlayerScoreRow";
 import PlayerScoreEditRow from "./PlayerScoreEditRow";
@@ -11,7 +11,7 @@ import {
   updatePlayerName,
   updateGameScore,
   updateSetScore
-} from "../../redux/actions/match-actions";
+} from "../../../redux/actions/match-actions";
 
 class ScoreDisplaySection extends Component {
   constructor(props) {

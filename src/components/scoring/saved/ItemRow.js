@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { View, TouchableHighlight, Text } from "react-native";
-import { exploreStyles } from "../../styles/explore-styles";
+import { exploreStyles } from "../../../styles/explore-styles";
 
 ItemRow.propTypes = {
   text: PropTypes.string.isRequired,

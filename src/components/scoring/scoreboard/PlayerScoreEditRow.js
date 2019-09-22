@@ -3,8 +3,8 @@ import { View, TextInput } from "react-native";
 import PropTypes from "prop-types";
 import ModalSelector from "react-native-modal-selector";
 import { Ionicons } from "@expo/vector-icons";
-import { scoreStyles } from "../../styles/score-styles";
-import { tennisGameScores } from "../../helpers/constants";
+import { scoreStyles } from "../../../styles/score-styles";
+import { tennisGameScores } from "../../../helpers/constants";
 
 const propTypes = {
   player: PropTypes.string.isRequired,

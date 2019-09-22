@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { SafeAreaView } from "react-native";
 
-import { styles } from "../../styles/styles";
+import { styles } from "../../../styles/styles";
 import ScoreDisplaySection from "./ScoreDisplaySection";
 import ScoreControlsSection from "./ScoreControlsSection";
 

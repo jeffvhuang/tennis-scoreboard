@@ -3,8 +3,8 @@ import { TouchableHighlight, View, Text } from "react-native";
 import { connect } from "react-redux";
 
 import NewMatchModal from "./NewMatchModal";
-import { styles } from "../../styles/styles";
-import { updatePlayerName } from "../../redux/actions/match-actions";
+import { styles } from "../../../styles/styles";
+import { updatePlayerName } from "../../../redux/actions/match-actions";
 
 class HomeScreen extends Component {
   static navigationOptions = {
@@ -25,7 +25,7 @@ class HomeScreen extends Component {
     this.closeModal();
     this.props.updatePlayerName(1, player1);
     this.props.updatePlayerName(2, player2);
-    this.props.navigation.navigate("Scoring");
+    this.props.navigation.navigate("Scoreboard");
   };
 
   render() {
