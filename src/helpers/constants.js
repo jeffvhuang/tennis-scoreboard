@@ -68,6 +68,16 @@ export function getDateStringFromTimestamp(timestamp) {
   return `${date.getDate()} ${month} ${date.getFullYear()}`;
 }
 
+// date in format yyyy-mm-dd
+export function getDateAndTriMonth(dateString) {
+  const dateParts = dateString.split("-");
+  const date =
+    dateParts[2].charAt(0) == "0" ? dateParts[2].substring(1) : dateParts[2];
+  const monthNum = parseInt(dateParts[1]);
+  const month = monthTriNames[monthNum - 1];
+  return `${date} ${month}`;
+}
+
 // Save the match into the phone's local storage
 export async function saveMatchToStorage(match) {
   const response = await AsyncStorage.getItem(STORAGE_KEY);
