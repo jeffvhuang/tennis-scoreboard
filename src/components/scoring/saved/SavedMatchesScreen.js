@@ -10,7 +10,6 @@ import {
 } from "../../../helpers/constants";
 import { styles } from "../../../styles/styles";
 import ItemRow from "./ItemRow";
-import { scoreStyles } from "../../../styles/score-styles";
 
 class SavedMatchesScreen extends Component {
   static navigationOptions = {
@@ -73,7 +72,7 @@ class SavedMatchesScreen extends Component {
           data={this.state.matches}
           renderItem={this.renderListItem}
           keyExtractor={item => item.id}
-          style={scoreStyles.listView}
+          style={styles.listView}
         />
       </SafeAreaView>
     );

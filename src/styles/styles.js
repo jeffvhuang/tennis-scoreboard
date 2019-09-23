@@ -106,5 +106,9 @@ export const styles = StyleSheet.create({
   },
   dropdownItem: {
     fontSize: moderateScale(14)
+  },
+  listView: {
+    flex: 1,
+    width: "100%"
   }
 });

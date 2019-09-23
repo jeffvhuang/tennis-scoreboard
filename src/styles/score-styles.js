@@ -100,10 +100,6 @@ export const scoreStyles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
-  listView: {
-    flex: 1,
-    width: "100%"
-  },
   buttonsRow: {
     width: "100%",
     height: "100%"

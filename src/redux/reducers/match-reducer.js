@@ -24,8 +24,6 @@ const initialState = {
 };
 
 const matchReducer = (state = initialState, action) => {
-  console.log("reducer actions", action);
-  console.log(A.CREATE_NEW_MATCH);
   switch (action.type) {
     case A.UPDATE_PLAYER_1_NAME:
       return merge(state, { player1: action.payload });

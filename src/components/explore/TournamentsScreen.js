@@ -1,36 +1,48 @@
 import React, { Component } from "react";
-import { View, Text, FlatList, AsyncStorage, SafeAreaView } from "react-native";
+import { View, Text, FlatList, SafeAreaView } from "react-native";
 import { STORAGE_KEY } from "../../helpers/constants";
+import { getTournaments } from "../../helpers/api";
 import { styles } from "../../styles/styles";
-import ItemRow from "../scoring/saved/ItemRow";
 import { exploreStyles } from "../../styles/explore-styles";
+import ItemRow from "../scoring/saved/ItemRow";
 
 const DATA = [
   {
-    id: "ss",
-    title: "US Open 2019"
+    id: "hey"
   }
 ];
-
 class TournamentsScreen extends Component {
-  componentDidMount() {
-    AsyncStorage.getItem(STORAGE_KEY);
-  }
-
-  goToMatch = id => () => {
-    this.props.navigation.navigate("Scoreboard", id);
+  static navigationOptions = {
+    title: "ATP Tournaments"
   };
 
+  // componentDidMount() {
+  //   const tournaments = getTournaments();
+  // }
+
   renderListItem = ({ item }) => {
-    return <ItemRow text={item.title} buttonFn={this.goToMatch(item.id)} />;
+    // const date = getDateStringFromTimestamp(item.modified);
+    // let score = "";
+    // for (let i = 0; i < item.scores1.length; i++) {
+    //   if (score.length) score += ", ";
+    //   score += `${item.scores1[i]} - ${item.scores2[i]}`;
+    // }
+    // score += "";
+    // const matchName = `${item.player1} v ${item.player2}`;
+    return (
+      <ItemRow key={item.id} buttonFn={() => {}} text1="" text2="" text3="" />
+    );
   };
 
   render() {
     return (
-      <SafeAreaView style={styles.androidSafeArea}>
-        <View style={exploreStyles.container}>
-          <Text>Tournaments</Text>
-        </View>
+      <SafeAreaView style={styles.container}>
+        <FlatList
+          data={DATA}
+          renderItem={this.renderListItem}
+          keyExtractor={item => item.id}
+          style={styles.listView}
+        />
       </SafeAreaView>
     );
   }
