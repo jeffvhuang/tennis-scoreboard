@@ -22,6 +22,16 @@ class SavedMatchesScreen extends Component {
 
   componentDidMount() {
     this.getMatches();
+    this.willFocusSubscription = this.props.navigation.addListener(
+      "willFocus",
+      () => {
+        this.getMatches();
+      }
+    );
+  }
+
+  componentWillUnmount() {
+    this.willFocusSubscription.remove();
   }
 
   async getMatches() {

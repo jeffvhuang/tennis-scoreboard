@@ -168,7 +168,7 @@ class ScoreControlsSection extends Component {
   render() {
     const { match } = this.props;
     const faultBtnTitle = match.isFault ? "Double Fault" : "Fault";
-    console.log(match);
+
     return (
       <View style={controlStyles.container}>
         <ControlsNameRow
