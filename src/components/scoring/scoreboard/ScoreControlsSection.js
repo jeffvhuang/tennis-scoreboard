@@ -1,38 +1,27 @@
 import React, { Component } from "react";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import { controlStyles } from "../../styles/control-styles";
-import Btn from "../common/Btn";
+import { controlStyles } from "../../../styles/control-styles";
+import { saveMatchToStorage } from "../../../helpers/constants";
 import {
   updatePlayerName,
   changeGameScore,
   updateSetScore,
   updateSetAfterGameEnd,
-  updateCurrentSet,
+  startNewSet,
   updateSetsWon,
-  resetScores,
   changeServer,
   changeFault,
   setTiebreak,
   setWinner
-} from "../../redux/actions/match-actions";
+} from "../../../redux/actions/match-actions";
+import GameButtonsRow from "./GameButtonsRow";
+import ControlsNameRow from "./ControlsNameRow";
+import LowerButtonsRow from "./LowerButtonsRow";
 
-class ScoreDisplaySection extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      fault: false
-    };
-  }
-
-  componentDidMount() {
-    // this.props.updateCurrentSet(1);
-    // this.props.resetScores();
-  }
-
+class ScoreControlsSection extends Component {
   incrementGameScore = playerNum => {
     return () => {
       const { match, changeGameScore } = this.props;
@@ -87,7 +76,7 @@ class ScoreDisplaySection extends Component {
   };
 
   updateSetAfterGameEnd = playerNum => {
-    const { match, updateCurrentSet, updateSetsWon, setWinner } = this.props;
+    const { match, startNewSet, updateSetsWon, setWinner } = this.props;
     const setIndex = match.currentSet - 1;
     let playerSetScore =
       playerNum == 1 ? match.scores1[setIndex] : match.scores2[setIndex];
@@ -119,7 +108,7 @@ class ScoreDisplaySection extends Component {
         updateSetsWon(playerNum, playerSetsWon + 1);
 
         if (playerSetsWon + 1 === match.setsToWin) setWinner(playerNum);
-        else updateCurrentSet(match.currentSet + 1);
+        else startNewSet();
       } else if (isEnteringTiebreak) {
         this.props.setTiebreak(true);
       }
@@ -128,7 +117,7 @@ class ScoreDisplaySection extends Component {
 
       if (playerSetsWon + 1 === match.setsToWin) setWinner(playerNum);
       else {
-        updateCurrentSet(match.currentSet + 1);
+        startNewSet();
         this.props.setTiebreak(false);
       }
     }
@@ -174,72 +163,30 @@ class ScoreDisplaySection extends Component {
     } else changeFault();
   };
 
+  saveMatch = () => saveMatchToStorage(this.props.match);
+
   render() {
     const { match } = this.props;
     const faultBtnTitle = match.isFault ? "Double Fault" : "Fault";
-    console.log("match", match);
+
     return (
       <View style={controlStyles.container}>
-        {match.winner > 0 ? (
-          <View style={controlStyles.nameRow}>
-            <View style={controlStyles.playerNameView}>
-              <Text style={controlStyles.text}>
-                {match.winner == 1
-                  ? `${match.player1} Wins`
-                  : `${match.player2} Wins`}
-              </Text>
-            </View>
-          </View>
-        ) : (
-          <View style={controlStyles.nameRow}>
-            <View style={controlStyles.playerNameView}>
-              <Text style={controlStyles.text}>{match.player1}</Text>
-            </View>
-            <View style={controlStyles.playerNameView}>
-              <Text style={controlStyles.text}>{match.player2}</Text>
-            </View>
-          </View>
-        )}
-        <View style={controlStyles.gameControlRow}>
-          <View style={controlStyles.gameControls}>
-            <Btn
-              title="-"
-              onPress={this.decrementGameScore(1)}
-              style={controlStyles.decrementBtn}
-              textStyle={controlStyles.decrementBtnText}
-            />
-            <Btn
-              title={match.gameScore1}
-              onPress={this.incrementGameScore(1)}
-              style={controlStyles.incrementBtn}
-              textStyle={controlStyles.incrementBtnText}
-            />
-            <Btn
-              title={match.gameScore2}
-              onPress={this.incrementGameScore(2)}
-              style={controlStyles.incrementBtn}
-              textStyle={controlStyles.incrementBtnText}
-            />
-            <Btn
-              title="-"
-              onPress={this.decrementGameScore(2)}
-              style={controlStyles.decrementBtn}
-              textStyle={controlStyles.decrementBtnText}
-            />
-          </View>
-        </View>
-        <View style={controlStyles.buttonsRow}>
-          <View style={controlStyles.leftBox}></View>
-          <View style={controlStyles.midBox}></View>
-          <View style={controlStyles.rightBox}>
-            <Btn
-              title={faultBtnTitle}
-              onPress={this.fault}
-              style={controlStyles.controlBtn}
-              textStyle={controlStyles.controlBtnText}
-            />
-          </View>
-        </View>
+        <ControlsNameRow
+          winnerNum={match.winner}
+          player1={match.player1}
+          player2={match.player2}
+        />
+        <GameButtonsRow
+          score1={match.gameScore1}
+          score2={match.gameScore2}
+          incrementScore={this.incrementGameScore}
+          decrementScore={this.decrementGameScore}
+        />
+        <LowerButtonsRow
+          title={faultBtnTitle}
+          faultBtnFn={this.fault}
+          saveFn={this.saveMatch}
+        />
       </View>
     );
   }
@@ -256,9 +203,8 @@ const mapDispatchToProps = dispatch => {
       changeGameScore,
       updateSetScore,
       updateSetAfterGameEnd,
-      updateCurrentSet,
+      startNewSet,
       changeServer,
-      resetScores,
       changeFault,
       setTiebreak,
       setWinner,
@@ -271,4 +217,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ScoreDisplaySection);
+)(ScoreControlsSection);

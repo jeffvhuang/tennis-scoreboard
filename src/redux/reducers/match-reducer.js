@@ -1,16 +1,20 @@
+import uuid from "uuid";
 import { ACTIONS as A } from "../actions/match-actions";
 
 const merge = (prev, next) => Object.assign({}, prev, next);
 
 const initialState = {
+  id: "",
+  created: null,
+  modified: null,
   player1: "Player 1",
   player2: "Player 2",
   gameScore1: "0",
   gameScore2: "0",
-  scores1: ["0", "0", ""],
-  scores2: ["0", "0", ""],
+  scores1: ["0"],
+  scores2: ["0"],
   player1SetsWon: 0,
-  player2SetsWon: 1,
+  player2SetsWon: 0,
   currentSet: 1,
   isPlayer1Serving: true,
   isTiebreak: false,
@@ -32,13 +36,13 @@ const matchReducer = (state = initialState, action) => {
       return merge(state, { gameScore2: action.payload });
 
     case A.UPDATE_SET_SCORE_1:
-      const scores1 = [...state.scores1];
-      scores1[action.setIndex] = action.payload;
-      return merge(state, { scores1 });
+      const newScores1 = [...state.scores1];
+      newScores1[action.setIndex] = action.payload;
+      return merge(state, { scores1: newScores1 });
     case A.UPDATE_SET_SCORE_2:
-      const scores2 = [...state.scores2];
-      scores2[action.setIndex] = action.payload;
-      return merge(state, { scores2 });
+      const newScores2 = [...state.scores2];
+      newScores2[action.setIndex] = action.payload;
+      return merge(state, { scores2: newScores2 });
 
     case A.UPDATE_SETS_WON_1:
       return merge(state, { player1SetsWon: action.payload });
@@ -47,6 +51,11 @@ const matchReducer = (state = initialState, action) => {
 
     case A.UPDATE_CURRENT_SET:
       return merge(state, { currentSet: action.payload });
+    case A.START_NEW_SET:
+      const scores1 = [...state.scores1, "0"];
+      const scores2 = [...state.scores2, "0"];
+      const currentSet = state.currentSet + 1;
+      return merge(state, { currentSet, scores1, scores2 });
     case A.CHANGE_FAULT:
       return merge(state, { isFault: !state.isFault });
     case A.CHANGE_SERVER:
@@ -56,8 +65,19 @@ const matchReducer = (state = initialState, action) => {
     case A.SET_WINNER:
       return merge(state, { winner: action.payload });
 
-    case A.RESET_SCORES:
-      return initialState;
+    case A.LOAD_MATCH:
+      return action.payload;
+    case A.CREATE_NEW_MATCH:
+      const date = Date.now();
+      const player1 = action.payload[0] ? action.payload[0] : "Player 1";
+      const player2 = action.payload[1] ? action.payload[1] : "Player 2";
+      return merge(initialState, {
+        id: uuid.v1(),
+        created: date,
+        modified: date,
+        player1,
+        player2
+      });
     default:
       return state;
   }

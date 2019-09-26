@@ -1,9 +1,11 @@
 import { combineReducers } from "redux";
 import matchReducer from "./match-reducer";
+import exploreReducer from "./explore-reducer";
 
 /* App’s top-level reducers */
 const appReducer = combineReducers({
-  match: matchReducer
+  match: matchReducer,
+  explore: exploreReducer
 });
 
 const rootReducer = (state, action) => {

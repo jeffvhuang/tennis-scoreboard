@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { TouchableHighlight, View, Text } from "react-native";
 import { connect } from "react-redux";
 
+import { saveMatchToStorage } from "../../../helpers/constants";
 import NewMatchModal from "./NewMatchModal";
-import { styles } from "../../styles/styles";
-import { updatePlayerName } from "../../redux/actions/match-actions";
+import { styles } from "../../../styles/styles";
 
 class HomeScreen extends Component {
   static navigationOptions = {
@@ -16,16 +16,18 @@ class HomeScreen extends Component {
   };
 
   showModal = () => this.setState({ modalVisible: true });
-
   closeModal = () => this.setState({ modalVisible: false });
 
+  goToSavedMatches = () => this.props.navigation.navigate("SavedMatches");
   goToTournaments = () => this.props.navigation.navigate("Tournaments");
 
-  goToScoring = (player1, player2) => {
+  goToScoring = async (player1, player2) => {
     this.closeModal();
-    this.props.updatePlayerName(1, player1);
-    this.props.updatePlayerName(2, player2);
-    this.props.navigation.navigate("Scoring");
+    const { match, navigation } = this.props;
+    if (match.id) await saveMatchToStorage(match);
+    if (!player1) player1 = "Player 1";
+    if (!player2) player2 = "Player 2";
+    navigation.navigate("Scoreboard", { player1, player2 });
   };
 
   render() {
@@ -39,7 +41,7 @@ class HomeScreen extends Component {
         <View style={styles.midRow}>
           <TouchableHighlight
             style={styles.homeBtn}
-            onPress={this.goToTournaments}
+            onPress={this.goToSavedMatches}
           >
             <Text style={styles.btnText}>Saved Matches</Text>
           </TouchableHighlight>
@@ -56,11 +58,4 @@ const mapStateToProps = state => ({
   match: state.match
 });
 
-const mapDispatchToProps = dispatch => ({
-  updatePlayerName
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(HomeScreen);
+export default connect(mapStateToProps)(HomeScreen);

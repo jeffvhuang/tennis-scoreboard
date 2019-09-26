@@ -1,8 +1,8 @@
 import React from "react";
 import { View, Text } from "react-native";
 import PropTypes from "prop-types";
-import Btn from "../common/Btn";
-import { scoreStyles } from "../../styles/score-styles";
+import Btn from "../../common/Btn";
+import { scoreStyles } from "../../../styles/score-styles";
 
 const propTypes = {
   toggleEdit: PropTypes.func.isRequired,

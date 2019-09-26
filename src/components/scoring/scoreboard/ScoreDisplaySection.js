@@ -3,30 +3,24 @@ import { View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import { scoreStyles } from "../../styles/score-styles";
+import { scoreStyles } from "../../../styles/score-styles";
 import ScoreTableHeader from "./ScoreTableHeader";
 import PlayerScoreRow from "./PlayerScoreRow";
 import PlayerScoreEditRow from "./PlayerScoreEditRow";
 import {
   updatePlayerName,
   updateGameScore,
-  updateSetScore,
-  resetScores
-} from "../../redux/actions/match-actions";
+  updateSetScore
+} from "../../../redux/actions/match-actions";
 
 class ScoreDisplaySection extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      currentSet: 1,
       isEditing: false
     };
   }
-
-  // componentDidMount() {
-  //   this.props.resetScores();
-  // }
 
   onNameChange1 = player1 => this.props.updatePlayerName(1, player1);
   onNameChange2 = player2 => this.props.updatePlayerName(2, player2);
@@ -104,7 +98,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
-    { updatePlayerName, updateGameScore, updateSetScore, resetScores },
+    { updatePlayerName, updateGameScore, updateSetScore },
     dispatch
   );
 };

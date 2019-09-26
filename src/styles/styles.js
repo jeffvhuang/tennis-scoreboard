@@ -10,6 +10,7 @@ export const colours = {
 };
 
 export const styles = StyleSheet.create({
+  // For screens not in a stack
   androidSafeArea: {
     flex: 1,
     backgroundColor: "navy",
@@ -105,5 +106,9 @@ export const styles = StyleSheet.create({
   },
   dropdownItem: {
     fontSize: moderateScale(14)
+  },
+  listView: {
+    flex: 1,
+    width: "100%"
   }
 });

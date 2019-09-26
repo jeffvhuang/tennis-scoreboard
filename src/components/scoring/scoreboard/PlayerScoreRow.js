@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text } from "react-native";
 import PropTypes from "prop-types";
 import { Ionicons } from "@expo/vector-icons";
-import { scoreStyles } from "../../styles/score-styles";
+import { scoreStyles } from "../../../styles/score-styles";
 
 const propTypes = {
   player: PropTypes.string.isRequired,

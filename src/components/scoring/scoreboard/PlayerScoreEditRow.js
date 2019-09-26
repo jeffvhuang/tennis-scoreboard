@@ -3,8 +3,8 @@ import { View, TextInput } from "react-native";
 import PropTypes from "prop-types";
 import ModalSelector from "react-native-modal-selector";
 import { Ionicons } from "@expo/vector-icons";
-import { scoreStyles } from "../../styles/score-styles";
-import { tennisGameScores } from "../../helpers/constants";
+import { scoreStyles } from "../../../styles/score-styles";
+import { tennisGameScores } from "../../../helpers/constants";
 
 const propTypes = {
   player: PropTypes.string.isRequired,
@@ -62,7 +62,7 @@ const PlayerScoreEditRow = ({
         <TextInput
           keyboardType="numeric"
           onChangeText={onScoreChange(1)}
-          value={setScores.length > 1 && setScores[1]}
+          value={setScores.length > 1 ? setScores[1] : ""}
           style={[scoreStyles.score, scoreStyles.input]}
         />
       </View>
@@ -70,7 +70,7 @@ const PlayerScoreEditRow = ({
         <TextInput
           keyboardType="numeric"
           onChangeText={onScoreChange(2)}
-          value={setScores.length > 2 && setScores[2]}
+          value={setScores.length > 2 ? setScores[2] : ""}
           style={[scoreStyles.score, scoreStyles.input]}
         />
       </View>

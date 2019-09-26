@@ -11,11 +11,13 @@ const matchActions = [
   "UPDATE_SETS_WON_1",
   "UPDATE_SETS_WON_2",
   "UPDATE_CURRENT_SET",
+  "START_NEW_SET",
   "CHANGE_SERVER",
   "SET_TIEBREAK",
   "SET_WINNER",
   "CHANGE_FAULT",
-  "RESET_SCORES"
+  "CREATE_NEW_MATCH",
+  "LOAD_MATCH"
 ];
 
 export const ACTIONS = createStringConstants(...matchActions);
@@ -73,6 +75,10 @@ export const updateCurrentSet = number => ({
   payload: number
 });
 
+export const startNewSet = () => ({
+  type: ACTIONS.START_NEW_SET
+});
+
 export const changeFault = () => ({
   type: ACTIONS.CHANGE_FAULT
 });
@@ -91,17 +97,12 @@ export const setWinner = playerNum => ({
   payload: playerNum
 });
 
-export const resetScores = () => ({
-  type: ACTIONS.RESET_SCORES
+export const createNewMatch = (player1, player2) => ({
+  type: ACTIONS.CREATE_NEW_MATCH,
+  payload: [player1, player2]
 });
 
-// async action creator
-// export const logInUser = (username, password, loginFn = login) => async dispatch => {
-//   dispatch({type: LOG_IN_SENT})
-//   try {
-//     const token = await loginFn(username, password)
-//     dispatch({type: LOG_IN_FULFILLED, payload: token})
-//   } catch (err) {
-//     dispatch({type: LOG_IN_REJECTED, payload: err.message})
-//   }
-// }
+export const loadMatch = match => ({
+  type: ACTIONS.LOAD_MATCH,
+  payload: match
+});

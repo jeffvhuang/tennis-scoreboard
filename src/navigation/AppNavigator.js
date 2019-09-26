@@ -3,20 +3,41 @@ import {
   createSwitchNavigator,
   createBottomTabNavigator
 } from "react-navigation";
-import HomeScreen from "../components/explore/HomeScreen";
+import HomeScreen from "../components/scoring/home/HomeScreen";
+import SavedMatchesScreen from "../components/scoring/saved/SavedMatchesScreen";
+import ScoringScreen from "../components/scoring/scoreboard/ScoringScreen";
 import TournamentsScreen from "../components/explore/TournamentsScreen";
 import MatchesScreen from "../components/explore/MatchesScreen";
 import LoginScreen from "../components/login/LoginScreen";
-import ScoringScreen from "../components/scoring/ScoringScreen";
+
+const ScoringStack = createStackNavigator(
+  {
+    Home: HomeScreen,
+    SavedMatches: SavedMatchesScreen,
+    Scoreboard: ScoringScreen
+  },
+  {
+    initialRouteName: "Home",
+    headerLayoutPreset: "center",
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: "navy"
+      },
+      headerTintColor: "#fff",
+      headerTitleStyle: {
+        fontWeight: "bold"
+      }
+    }
+  }
+);
 
 const ExploreStack = createStackNavigator(
   {
-    Home: HomeScreen,
     Tournaments: TournamentsScreen,
     Matches: MatchesScreen
   },
   {
-    initialRouteName: "Home",
+    initialRouteName: "Tournaments",
     headerLayoutPreset: "center",
     defaultNavigationOptions: {
       headerStyle: {
@@ -34,7 +55,7 @@ const ExploreStack = createStackNavigator(
 
 const MainTabs = createBottomTabNavigator(
   {
-    Scoring: ScoringScreen,
+    Scoring: ScoringStack,
     Explore: ExploreStack
   },
   {
@@ -43,13 +64,13 @@ const MainTabs = createBottomTabNavigator(
       activeBackgroundColor: "royalblue",
       style: {
         backgroundColor: "white",
-        height: 50
+        height: 40
       },
       tabStyle: {
         justifyContent: "center"
       },
       labelStyle: {
-        fontSize: 24,
+        fontSize: 18,
         height: "100%",
         textAlignVertical: "center"
       }

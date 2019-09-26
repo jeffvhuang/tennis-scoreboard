@@ -1,3 +1,9 @@
+import { AsyncStorage } from "react-native";
+
+// TODO: access sensitive data from environment variables via dotenv npm package
+export const apiKey = "22pkw75ervj84e53qx8xye9a";
+export const STORAGE_KEY = "TENNIS_SCOREBOARD";
+
 export const tennisGameScores = [
   {
     key: "0",
@@ -25,6 +31,71 @@ export const tennisGameScores = [
     value: "Adv"
   }
 ];
+
+const monthNames = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December"
+];
+
+const monthTriNames = [
+  "JAN",
+  "FEB",
+  "MAR",
+  "APR",
+  "MAY",
+  "JUN",
+  "JUL",
+  "AUG",
+  "SEP",
+  "OCT",
+  "NOV",
+  "DEC"
+];
+
+export function getDateStringFromTimestamp(timestamp) {
+  if (!timestamp) return "";
+  const date = new Date(timestamp);
+  const month = monthTriNames[date.getMonth()];
+  return `${date.getDate()} ${month} ${date.getFullYear()}`;
+}
+
+// date in format yyyy-mm-dd
+export function getDateAndTriMonth(dateString) {
+  const dateParts = dateString.split("-");
+  const date =
+    dateParts[2].charAt(0) == "0" ? dateParts[2].substring(1) : dateParts[2];
+  const monthNum = parseInt(dateParts[1]);
+  const month = monthTriNames[monthNum - 1];
+  return `${date} ${month}`;
+}
+
+// Save the match into the phone's local storage
+export async function saveMatchToStorage(match) {
+  const response = await AsyncStorage.getItem(STORAGE_KEY);
+  const matchToSave = { ...match, modified: Date.now() };
+  let storedMatches = JSON.parse(response);
+
+  if (storedMatches) {
+    const index = storedMatches.findIndex(x => x.id == match.id);
+    // Remove if it exists (instead of replace to keep in last modified order)
+    if (index != -1) storedMatches.splice(index, 1);
+    storedMatches.push(matchToSave);
+  } else {
+    storedMatches = [matchToSave];
+  }
+
+  AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(storedMatches));
+}
 
 // REDUX FUNCTIONS =======================
 /* Create object of actions for redux in format:
