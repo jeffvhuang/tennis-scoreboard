@@ -1,8 +1,8 @@
 import { AsyncStorage } from "react-native";
+import { TENNIS_API_KEY, TENNIS_STORAGE_KEY } from "react-native-dotenv";
 
-// TODO: access sensitive data from environment variables via dotenv npm package
-export const apiKey = "";
-export const STORAGE_KEY = "TENNIS_SCOREBOARD";
+export const API_KEY = TENNIS_API_KEY;
+export const STORAGE_KEY = TENNIS_STORAGE_KEY;
 
 export const tennisGameScores = [
   {
